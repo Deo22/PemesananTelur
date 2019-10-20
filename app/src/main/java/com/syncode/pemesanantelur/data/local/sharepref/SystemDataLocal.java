@@ -30,9 +30,11 @@ public class SystemDataLocal {
         editor.putString("coordinate", usersData.getCoordinate());
         editor.putString("username", usersData.getUsername());
         editor.putString("password", usersData.getPassword());
-        editor.putString("name", usersData.getFname() + " " + usersData.getLname());
+        editor.putString("lname", usersData.getFname());
+        editor.putString("fname", usersData.getLname());
         editor.putString("address", usersData.getStreet());
         editor.putString("email", usersData.getEmail());
+        editor.putString("shop", usersData.getNameShop());
         editor.putBoolean("login", true);
         editor.apply();
     }
@@ -43,9 +45,11 @@ public class SystemDataLocal {
         String password = sharedPreferences.getString("password", "");
         String address = sharedPreferences.getString("address", "");
         String email = sharedPreferences.getString("email", "");
-        String name = sharedPreferences.getString("name", "");
+        String lName = sharedPreferences.getString("lname", "");
+        String fName = sharedPreferences.getString("fname", "");
         String coordinate = sharedPreferences.getString("coordinate", "");
-        return new User(username, password, email, address, name, coordinate);
+        String nameShop = sharedPreferences.getString("shop", "");
+        return new User(username, password, email, address, lName, fName, coordinate, nameShop);
     }
 
     public boolean getCheckLogin() {

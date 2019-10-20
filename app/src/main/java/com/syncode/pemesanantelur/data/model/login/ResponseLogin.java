@@ -19,8 +19,24 @@ public class ResponseLogin {
     private String idAddr;
     @SerializedName("street")
     private String street;
-    @SerializedName("kordinat")
+    @SerializedName("coordinate")
     private String coordinate;
+
+    @SerializedName("shop")
+    private String nameShop;
+
+    public ResponseLogin(String username, String fname, String lname, String email, String password, String type, String idAddr, String street, String coordinate, String nameShop) {
+        this.username = username;
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+        this.idAddr = idAddr;
+        this.street = street;
+        this.coordinate = coordinate;
+        this.nameShop = nameShop;
+    }
 
     public String getUsername() {
         return username;
@@ -58,15 +74,7 @@ public class ResponseLogin {
         return coordinate;
     }
 
-    public ResponseLogin(String username, String fname, String lname, String email, String password, String type, String idAddr, String street, String coordinate) {
-        this.username = username;
-        this.fname = fname;
-        this.lname = lname;
-        this.email = email;
-        this.password = password;
-        this.type = type;
-        this.idAddr = idAddr;
-        this.street = street;
-        this.coordinate = coordinate;
+    public String getNameShop() {
+        return nameShop;
     }
 }

@@ -37,18 +37,18 @@ public class OrderActivity extends AppCompatActivity implements Observer<OrderEn
         String dateStr = formatter.format(date);
         String orderId = "ORD" + date.getTime();
         if (cart != null) {
-            orderViewModel.setOrder(orderId,
-                    cart.getProductName(),
-                    systemDataLocal.getLoginData().getName(),
-                    " ",
-                    " woy coeg",
-                    "jdksfjklds",
-                    systemDataLocal.getLoginData().getAddress(),
-                    cart.getPrice(),
-                    cart.getAmmount(),
-                    0,
-                    dateStr);
-            orderViewModel.getOrderLiveData().observe(this, this);
+//            orderViewModel.setOrder(orderId,
+//                    cart.getProductName(),
+//                    systemDataLocal.getLoginData().getName(),
+//                    " ",
+//                    " woy coeg",
+//                    "jdksfjklds",
+//                    systemDataLocal.getLoginData().getAddress(),
+//                    cart.getPrice(),
+//                    cart.getAmmount(),
+//                    0,
+//                    dateStr);
+//            orderViewModel.getOrderLiveData().observe(this, this);
         }
     }
 

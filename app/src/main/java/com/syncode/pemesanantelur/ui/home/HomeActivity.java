@@ -50,18 +50,21 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         User user = systemDataLocal.getLoginData();
         System.out.println(user.getCoordinate());
         System.out.println(user.getAddress());
-        System.out.println(user.getName());
         System.out.println(user.getPassword());
         System.out.println(user.getEmail());
         System.out.println(user.getUsername());
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setElevation(0f);
+            getSupportActionBar().setTitle(getResources().getString(R.string.produk));
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!systemDataLocal.getCheckLogin()){
-            SwitchActivity.mainSwitch(this,LoginActivity.class);
+        if (!systemDataLocal.getCheckLogin()) {
+            SwitchActivity.mainSwitch(this, LoginActivity.class);
             finish();
         }
     }
@@ -84,33 +87,42 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        String title = getResources().getString(R.string.produk);
         switch (item.getItemId()) {
             case R.id.m_home:
                 fm.beginTransaction().show(homeFragment).commit();
                 fm.beginTransaction().hide(transactionFragment).commit();
                 fm.beginTransaction().hide(accountFragment).commit();
                 fm.beginTransaction().hide(aboutFragment).commit();
-                return true;
+                title = getResources().getString(R.string.produk);
+                break;
             case R.id.m_transaksi:
                 fm.beginTransaction().show(transactionFragment).commit();
                 fm.beginTransaction().hide(homeFragment).commit();
                 fm.beginTransaction().hide(accountFragment).commit();
                 fm.beginTransaction().hide(aboutFragment).commit();
-                return true;
+                title = getResources().getString(R.string.transaksi);
+                break;
             case R.id.m_account:
                 fm.beginTransaction().show(accountFragment).commit();
                 fm.beginTransaction().hide(homeFragment).commit();
                 fm.beginTransaction().hide(transactionFragment).commit();
                 fm.beginTransaction().hide(aboutFragment).commit();
-                return true;
+                title = getResources().getString(R.string.akun);
+                break;
             case R.id.m_about:
                 fm.beginTransaction().show(aboutFragment).commit();
                 fm.beginTransaction().hide(homeFragment).commit();
                 fm.beginTransaction().hide(transactionFragment).commit();
                 fm.beginTransaction().hide(accountFragment).commit();
-                return true;
+                title = getResources().getString(R.string.tentang);
+                break;
             default:
-                return false;
+                break;
         }
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+        return true;
     }
 }
