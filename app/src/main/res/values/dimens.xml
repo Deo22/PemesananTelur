@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_horizontal">18dp</dimen>
+    <dimen name="margin_vertical">18dp</dimen>
+    <dimen name="text_product">16sp</dimen>
+    <dimen name="contentPadding">10dp</dimen>
+    <dimen name="padding_edt">12dp</dimen>
+    <dimen name="drawable_padding">10dp</dimen>
+
+</resources>

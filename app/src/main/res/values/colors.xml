@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#88D8C7</color>
+    <color name="colorPrimaryDark">#6FB1A2</color>
+    <color name="colorAccent">#88D8C7</color>
+    <color name="white">#ffff</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="black">#CE000000</color>
+    <color name="bg_cart">#0D000000</color>
+    <color name="color_start_bg">#E63E7496</color>
+    <color name="color_end_bg">#B988D8C7</color>
+    <color name="grey">#9C969595</color>
+    <color name="white_transparent">#A6FFFFFF</color>
+    <color name="blue">#03A9F4</color>
+    <color name="dark_grey">#3A3D3D</color>
+    <color name="orange">#FF5722</color>
+</resources>

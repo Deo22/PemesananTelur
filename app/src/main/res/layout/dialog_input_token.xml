@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:layout_marginTop="@dimen/margin_vertical"
+        style="@style/editText"
+        android:drawableStart="@drawable/ic_flag"
+        android:id="@+id/inputToken"
+        android:hint="@string/token"
+        android:text="@string/token"
+        android:singleLine="true"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_flag" />
+    <Button
+        android:layout_marginTop="@dimen/margin_vertical"
+        android:id="@+id/btnVerifikasi"
+        android:text="@string/verifikasi"
+        android:background="@color/colorPrimary"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
