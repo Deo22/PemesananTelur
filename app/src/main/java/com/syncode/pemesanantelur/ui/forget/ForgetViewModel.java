@@ -22,4 +22,8 @@ public class ForgetViewModel extends ViewModel {
     public LiveData<MessageOnly> messageOnlyLiveData(String email, String otp) {
         return forgetPasswordRepository.sendToken(email, otp);
     }
+
+    public LiveData<MessageOnly> getResetPassword(String email, String password) {
+        return forgetPasswordRepository.getResetPassword(email, password);
+    }
 }

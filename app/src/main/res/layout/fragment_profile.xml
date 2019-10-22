@@ -10,22 +10,22 @@
         android:id="@+id/circleImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_vertical"
         android:src="@drawable/ic_man"
-        app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_horizontal"
         android:layout_marginRight="@dimen/margin_horizontal"
-        android:layout_marginBottom="48dp"
+        android:layout_marginLeft="@dimen/margin_horizontal"
         app:cardBackgroundColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                 android:drawableLeft="@drawable/ic_location"
                 android:enabled="false"
                 android:gravity="start"
-                android:lines="2"
+                android:lines="3"
                 android:textAlignment="viewStart" />
 
             <View
@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:background="@color/blue"
+        android:background="@color/colorPrimary"
         android:text="@string/ubah"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

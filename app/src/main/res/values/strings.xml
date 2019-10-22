@@ -19,7 +19,7 @@
     <string name="plus">+</string>
     <string name="subTotal">SubTotal</string>
     <string name="bayar">Bayar</string>
-    <string name="rp29_800">Rp29.800</string>
+    <string name="rp29_800">Rp29.800/Peti</string>
     <string name="belum_ada_daftar_belanja">Belum ada Daftar Belanja</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -50,4 +50,10 @@
     <string name="nama_agent">Nama Agent</string>
     <string name="simpan">Simpan</string>
     <string name="ubah">Ubah</string>
+    <string name="old_pass">Password Lama</string>
+    <string name="new_password">Password Baru</string>
+    <string name="konfirmasi_password">Konfirmasi Password</string>
+    <string name="message_email">Email Anda Belum Terverifikasi</string>
+    <string name="message_email2">Ingin Verifikasi Email ?</string>
+    <string name="pt">PT Moeladi Peternakan</string>
 </resources>

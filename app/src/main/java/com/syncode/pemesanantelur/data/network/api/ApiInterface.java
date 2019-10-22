@@ -61,4 +61,23 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("users/verifyotp")
     Call<MessageOnly> tokenPassword(@Field("email") String email, @Field("otp") String otp);
+
+    @FormUrlEncoded
+    @POST("users/emailverification")
+    Call<MessageOnly> getTokenVerification(@Field("email") String email);
+
+
+    @FormUrlEncoded
+    @POST("users/verifyotpemail")
+    Call<MessageOnly> verificationEmail(@Field("email") String email, @Field("otp") String otp, @Field("username") String username);
+
+
+    @FormUrlEncoded
+    @POST("users/reset")
+    Call<MessageOnly> resetPassword(@Field("email") String email, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("users/changepassword")
+    Call<MessageOnly> changePassword(@Field("username") String username, @Field("oldPassword") String oldPassword, @Field("newPassword") String newPassword);
+
 }

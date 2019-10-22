@@ -36,8 +36,6 @@ public class ProfileFragment extends Fragment {
         edtAddress.setText(user.getAddress());
         edtFname.setText(user.getfName());
         edtlName.setText(user.getlName());
-
-
     }
 
     @Override

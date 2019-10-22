@@ -10,16 +10,28 @@ public class User {
     private String fName;
     private String coordinate;
     private String nameShop;
+    private String idAddr;
+    private int isVerified;
 
-    public User(String username, String password, String email, String address, String lName, String fName, String coordinate, String nameShop) {
+    public User(String username, String password, String email, String address, String lName, String fName, String coordinate, String nameShop, String idAddr, int isVerified) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.address = address;
         this.lName = lName;
+        this.isVerified = isVerified;
+        this.idAddr = idAddr;
         this.fName = fName;
         this.coordinate = coordinate;
         this.nameShop = nameShop;
+    }
+
+    public String getIdAddr() {
+        return idAddr;
+    }
+
+    public int getIsVerified() {
+        return isVerified;
     }
 
     public String getUsername() {

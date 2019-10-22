@@ -1,26 +1,35 @@
 package com.syncode.pemesanantelur.ui.home;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.local.sharepref.SystemDataLocal;
-import com.syncode.pemesanantelur.data.model.user.User;
+import com.syncode.pemesanantelur.data.model.MessageOnly;
+import com.syncode.pemesanantelur.data.network.repository.verificationemail.VerificationEmailRepository;
 import com.syncode.pemesanantelur.ui.home.fragment.aboutfragment.AboutFragment;
 import com.syncode.pemesanantelur.ui.home.fragment.accountfragment.AccountFragment;
 import com.syncode.pemesanantelur.ui.home.fragment.homefragment.HomeFragment;
 import com.syncode.pemesanantelur.ui.home.fragment.transactionfragment.TransactionFragment;
 import com.syncode.pemesanantelur.ui.login.LoginActivity;
+import com.syncode.pemesanantelur.utils.DialogClass;
 import com.syncode.pemesanantelur.utils.SwitchActivity;
 
-public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, Observer<MessageOnly> {
 
 
     final Fragment homeFragment = new HomeFragment();
@@ -31,6 +40,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     final FragmentManager fm = getSupportFragmentManager();
 
     private SystemDataLocal systemDataLocal;
+
+    private AlertDialog alertDialog;
+    private VerificationEmailRepository verificationEmailRepository;
+    private String email, username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +60,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         fm.beginTransaction().hide(accountFragment).commit();
         fm.beginTransaction().hide(aboutFragment).commit();
         systemDataLocal = new SystemDataLocal(this);
-        User user = systemDataLocal.getLoginData();
-        System.out.println(user.getCoordinate());
-        System.out.println(user.getAddress());
-        System.out.println(user.getPassword());
-        System.out.println(user.getEmail());
-        System.out.println(user.getUsername());
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0f);
             getSupportActionBar().setTitle(getResources().getString(R.string.produk));
         }
+        verificationEmailRepository = new VerificationEmailRepository();
+        if (systemDataLocal.getLoginData().getIsVerified() == 0) {
+            alertDialogEmailVerify();
+        }
+        username = systemDataLocal.getLoginData().getUsername();
+        email = systemDataLocal.getLoginData().getEmail();
     }
 
     @Override
@@ -124,5 +136,52 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             getSupportActionBar().setTitle(title);
         }
         return true;
+    }
+
+
+    private void loadingDialog() {
+        @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.loading_alert, null, false);
+        alertDialog = DialogClass.dialog(this, v).create();
+        alertDialog.show();
+    }
+
+
+    private void alertDialogEmailVerify() {
+        @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.verification_email_dialog, null, false);
+        AlertDialog.Builder builderVerify = DialogClass.dialog(this, v);
+        builderVerify.setNegativeButton("Nanti", (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+        }).setPositiveButton("Verifikasi", (dialogInterface, i) -> {
+            loadingDialog();
+            verificationEmailRepository.getTokenVerification(systemDataLocal.getLoginData().getEmail()).observe(this, this);
+        });
+        alertDialog = builderVerify.create();
+        alertDialog.show();
+    }
+
+
+    private void inputTokenDialog() {
+        loadingDialog();
+        @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.dialog_input_token, null, false);
+        AlertDialog.Builder inputTokenBuilder = DialogClass.dialog(this, v);
+        EditText edtToken = v.findViewById(R.id.edtToken);
+        inputTokenBuilder.setNegativeButton("Keluar", (dialogInterface, i) -> dialogInterface.dismiss()).setPositiveButton("Verifikasi", (dialogInterface, i) -> {
+            loadingDialog();
+            String token = edtToken.getText().toString().trim();
+            verificationEmailRepository.verificationEmail(email, username, token).observe(HomeActivity.this, HomeActivity.this);
+            systemDataLocal.editEmailIsVerified(1);
+        });
+        alertDialog = inputTokenBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onChanged(MessageOnly messageOnly) {
+        if (messageOnly.isStatus()) {
+            alertDialog.dismiss();
+            inputTokenDialog();
+
+        }
+        Toast.makeText(HomeActivity.this, messageOnly.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

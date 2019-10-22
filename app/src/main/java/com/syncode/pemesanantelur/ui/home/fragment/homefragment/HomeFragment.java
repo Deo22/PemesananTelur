@@ -24,6 +24,8 @@ import com.bumptech.glide.Glide;
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.model.product.Product;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
+import com.syncode.pemesanantelur.ui.order.OrderActivity;
+import com.syncode.pemesanantelur.utils.SwitchActivity;
 
 
 public class HomeFragment extends Fragment implements Observer<Product> {
@@ -49,12 +51,13 @@ public class HomeFragment extends Fragment implements Observer<Product> {
         txtTitle = view.findViewById(R.id.txtTitle);
         txtPrice = view.findViewById(R.id.txtPrice);
         txtDesc = view.findViewById(R.id.txtDesc);
+        btnBuy = view.findViewById(R.id.btn_buy);
         cardContainer = view.findViewById(R.id.cardView);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         productViewModel.setProductLiveData();
         productViewModel.getProductLiveData().observe(this, this);
         progressBar.setVisibility(View.VISIBLE);
-
+        btnBuy.setOnClickListener(view1 -> SwitchActivity.mainSwitch(getContext(), OrderActivity.class));
 
     }
 

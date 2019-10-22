@@ -35,7 +35,32 @@ public class SystemDataLocal {
         editor.putString("address", usersData.getStreet());
         editor.putString("email", usersData.getEmail());
         editor.putString("shop", usersData.getNameShop());
+        editor.putString("idAddres", usersData.getIdAddr());
+        editor.putInt("isverified", usersData.getIsVerified());
         editor.putBoolean("login", true);
+        editor.apply();
+    }
+
+    public void editAllSessionLogin(String username, String password, String lname, String fname, String address, String email, String shop, String idAddr, int isVerified, String coordinate) {
+        sharedPreferences = context.getSharedPreferences(KEY_USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("coordinate", coordinate);
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.putString("lname", lname);
+        editor.putString("fname", fname);
+        editor.putString("address", address);
+        editor.putString("email", email);
+        editor.putString("shop", shop);
+        editor.putString("idAddres", address);
+        editor.putBoolean("login", true);
+        editor.apply();
+    }
+
+    public void editEmailIsVerified(int isVerified) {
+        sharedPreferences = context.getSharedPreferences(KEY_USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("isverified", isVerified);
         editor.apply();
     }
 
@@ -49,7 +74,9 @@ public class SystemDataLocal {
         String fName = sharedPreferences.getString("fname", "");
         String coordinate = sharedPreferences.getString("coordinate", "");
         String nameShop = sharedPreferences.getString("shop", "");
-        return new User(username, password, email, address, lName, fName, coordinate, nameShop);
+        int isVerified = sharedPreferences.getInt("isverified", 0);
+        String idAddres = sharedPreferences.getString("idAddres", "");
+        return new User(username, password, email, address, lName, fName, coordinate, nameShop, idAddres, isVerified);
     }
 
     public boolean getCheckLogin() {

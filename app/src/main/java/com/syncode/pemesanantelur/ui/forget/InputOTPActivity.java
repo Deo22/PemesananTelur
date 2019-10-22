@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.model.MessageOnly;
 import com.syncode.pemesanantelur.utils.DialogClass;
+import com.syncode.pemesanantelur.utils.SwitchActivity;
 
 public class InputOTPActivity extends AppCompatActivity {
 
@@ -41,8 +42,9 @@ public class InputOTPActivity extends AppCompatActivity {
                     @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.loading_alert, null, false);
                     alertDialog = DialogClass.dialog(InputOTPActivity.this, v).create();
                     alertDialog.show();
+                    SwitchActivity.mainSwitch(InputOTPActivity.this, NewPasswordActivity.class, email, "email");
+                } else {
                     Toast.makeText(InputOTPActivity.this, messageOnly.getMessage(), Toast.LENGTH_LONG).show();
-                }else{
                     alertDialog.dismiss();
                 }
             });

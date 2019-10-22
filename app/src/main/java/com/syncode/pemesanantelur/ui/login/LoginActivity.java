@@ -1,10 +1,13 @@
 package com.syncode.pemesanantelur.ui.login;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginViewModel homeViewModel;
     private SystemDataLocal systemDataLocal;
     private android.app.AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +48,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
-        edtPassword.setOnKeyListener((view, i, keyEvent) -> {
-            if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                    (i == KeyEvent.KEYCODE_ENTER)) {
+        edtPassword.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_DONE) {
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(edtPassword.getWindowToken(), 0);
+                }
                 login();
                 return true;
             }
@@ -71,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onChanged(Login login) {
         if (login.getuserData() != null) {
             alertDialog.dismiss();
+            System.out.println(login.getuserData().getIsVerified());
             systemDataLocal = new SystemDataLocal(this, login.getuserData());
             systemDataLocal.setSessionLogin();
             alertDialog.dismiss();
@@ -93,12 +101,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void login() {
-        @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.loading_alert,null,false);
-        alertDialog = DialogClass.dialog(this,v).create();
+        @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.loading_alert, null, false);
+        alertDialog = DialogClass.dialog(this, v).create();
         alertDialog.show();
         String username = edtUsername.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         homeViewModel.setLogin(username, password);
         homeViewModel.getUserEntityLiveData().observe(this, this);
+
     }
 }

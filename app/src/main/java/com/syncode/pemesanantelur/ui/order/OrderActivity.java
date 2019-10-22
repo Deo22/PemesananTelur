@@ -36,6 +36,12 @@ public class OrderActivity extends AppCompatActivity implements Observer<OrderEn
         Date date = new Date(System.currentTimeMillis());
         String dateStr = formatter.format(date);
         String orderId = "ORD" + date.getTime();
+
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setElevation(0f);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Atur Pesanan");
+        }
         if (cart != null) {
 //            orderViewModel.setOrder(orderId,
 //                    cart.getProductName(),
@@ -57,5 +63,11 @@ public class OrderActivity extends AppCompatActivity implements Observer<OrderEn
         if (orderEntity != null) {
             Toast.makeText(this,orderEntity.getMessage(),Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 }
