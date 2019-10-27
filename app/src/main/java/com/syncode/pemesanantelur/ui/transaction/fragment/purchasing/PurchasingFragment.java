@@ -19,13 +19,12 @@ import android.widget.ProgressBar;
 
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.model.order.OrderEntity;
-import com.syncode.pemesanantelur.data.viewmodel.order.OrderViewModel;
+import com.syncode.pemesanantelur.ui.home.fragment.transactionfragment.AdapterPurchasing;
+import com.syncode.pemesanantelur.ui.order.viewmodel.OrderViewModel;
 
 
 public class PurchasingFragment extends Fragment implements Observer<OrderEntity> {
 
-
-    private OrderViewModel orderViewModel;
 
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -38,7 +37,7 @@ public class PurchasingFragment extends Fragment implements Observer<OrderEntity
         recyclerView = view.findViewById(R.id.recycleView);
         progressBar = view.findViewById(R.id.progressBar);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
-        orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
+        OrderViewModel orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
         loadData();
         progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setOnRefreshListener(this::loadData);
@@ -65,7 +64,7 @@ public class PurchasingFragment extends Fragment implements Observer<OrderEntity
     }
 
     private void loadData() {
-        orderViewModel.setOrderAllData();
-        orderViewModel.getOrderLiveData().observe(PurchasingFragment.this, PurchasingFragment.this);
+//        orderViewModel.setOrderAllData();
+//        orderViewModel.getOrderLiveData().observe(PurchasingFragment.this, PurchasingFragment.this);
     }
 }

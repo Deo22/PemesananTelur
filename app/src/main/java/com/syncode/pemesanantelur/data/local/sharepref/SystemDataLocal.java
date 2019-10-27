@@ -28,6 +28,7 @@ public class SystemDataLocal {
         sharedPreferences = context.getSharedPreferences(KEY_USER, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("coordinate", usersData.getCoordinate());
+        editor.putString("idAgent", usersData.getIdAgent());
         editor.putString("username", usersData.getUsername());
         editor.putString("password", usersData.getPassword());
         editor.putString("lname", usersData.getFname());
@@ -67,6 +68,7 @@ public class SystemDataLocal {
     public User getLoginData() {
         sharedPreferences = context.getSharedPreferences(KEY_USER, Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
+        String idAgent = sharedPreferences.getString("idAgent", "");
         String password = sharedPreferences.getString("password", "");
         String address = sharedPreferences.getString("address", "");
         String email = sharedPreferences.getString("email", "");
@@ -76,7 +78,7 @@ public class SystemDataLocal {
         String nameShop = sharedPreferences.getString("shop", "");
         int isVerified = sharedPreferences.getInt("isverified", 0);
         String idAddres = sharedPreferences.getString("idAddres", "");
-        return new User(username, password, email, address, lName, fName, coordinate, nameShop, idAddres, isVerified);
+        return new User(username, password, email, address, lName, fName, coordinate, nameShop, idAddres, isVerified,idAgent);
     }
 
     public boolean getCheckLogin() {

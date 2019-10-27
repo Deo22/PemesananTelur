@@ -2,6 +2,7 @@ package com.syncode.pemesanantelur.ui.home;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,9 +42,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     private SystemDataLocal systemDataLocal;
 
-    private AlertDialog alertDialog;
     private VerificationEmailRepository verificationEmailRepository;
     private String email, username;
+    private AlertDialog alertDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }
         verificationEmailRepository = new VerificationEmailRepository();
         if (systemDataLocal.getLoginData().getIsVerified() == 0) {
-            alertDialogEmailVerify();
+            alertDialogEmailVerify().show();
         }
         username = systemDataLocal.getLoginData().getUsername();
         email = systemDataLocal.getLoginData().getEmail();
@@ -146,7 +148,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    private void alertDialogEmailVerify() {
+    private AlertDialog alertDialogEmailVerify() {
         @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.verification_email_dialog, null, false);
         AlertDialog.Builder builderVerify = DialogClass.dialog(this, v);
         builderVerify.setNegativeButton("Nanti", (dialogInterface, i) -> {
@@ -155,33 +157,32 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             loadingDialog();
             verificationEmailRepository.getTokenVerification(systemDataLocal.getLoginData().getEmail()).observe(this, this);
         });
-        alertDialog = builderVerify.create();
-        alertDialog.show();
+        return builderVerify.create();
     }
 
 
     private void inputTokenDialog() {
-        loadingDialog();
         @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.dialog_input_token, null, false);
         AlertDialog.Builder inputTokenBuilder = DialogClass.dialog(this, v);
         EditText edtToken = v.findViewById(R.id.edtToken);
-        inputTokenBuilder.setNegativeButton("Keluar", (dialogInterface, i) -> dialogInterface.dismiss()).setPositiveButton("Verifikasi", (dialogInterface, i) -> {
+        inputTokenBuilder.setNegativeButton("Keluar", (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+            alertDialog.dismiss();
+        }).setPositiveButton("Verifikasi", (dialogInterface, i) -> {
             loadingDialog();
             String token = edtToken.getText().toString().trim();
             verificationEmailRepository.verificationEmail(email, username, token).observe(HomeActivity.this, HomeActivity.this);
             systemDataLocal.editEmailIsVerified(1);
         });
-        alertDialog = inputTokenBuilder.create();
-        alertDialog.show();
+       alertDialog = inputTokenBuilder.create();
+       alertDialog.show();
     }
 
     @Override
     public void onChanged(MessageOnly messageOnly) {
-        if (messageOnly.isStatus()) {
-            alertDialog.dismiss();
-            inputTokenDialog();
-
-        }
+        alertDialog.dismiss();
+        inputTokenDialog();
         Toast.makeText(HomeActivity.this, messageOnly.getMessage(), Toast.LENGTH_LONG).show();
     }
+
 }

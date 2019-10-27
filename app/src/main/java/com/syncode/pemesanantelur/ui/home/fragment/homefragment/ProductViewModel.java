@@ -7,7 +7,6 @@ import com.syncode.pemesanantelur.data.model.product.Product;
 import com.syncode.pemesanantelur.data.network.repository.product.ProductRepository;
 
 public class ProductViewModel extends ViewModel {
-    private LiveData<Product> productLiveData;
     private ProductRepository productRepository;
 
 
@@ -16,13 +15,8 @@ public class ProductViewModel extends ViewModel {
     }
 
 
-    public void setProductLiveData() {
-        productLiveData = productRepository.getProductData();
-    }
-
-
     public LiveData<Product> getProductLiveData() {
-        return productLiveData;
+        return productRepository.getProductData();
     }
 
 

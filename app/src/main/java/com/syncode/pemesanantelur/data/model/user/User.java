@@ -12,10 +12,12 @@ public class User {
     private String nameShop;
     private String idAddr;
     private int isVerified;
+    private String idAgent;
 
-    public User(String username, String password, String email, String address, String lName, String fName, String coordinate, String nameShop, String idAddr, int isVerified) {
+    public User(String username, String password, String email, String address, String lName, String fName, String coordinate, String nameShop, String idAddr, int isVerified, String idAgent) {
         this.username = username;
         this.password = password;
+        this.idAgent = idAgent;
         this.email = email;
         this.address = address;
         this.lName = lName;
@@ -56,6 +58,10 @@ public class User {
 
     public String getfName() {
         return fName;
+    }
+
+    public String getIdAgent() {
+        return idAgent;
     }
 
     public String getCoordinate() {

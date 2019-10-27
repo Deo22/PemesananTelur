@@ -6,8 +6,11 @@ import java.util.List;
 
 public class OrderEntity {
 
-    @SerializedName("message")
-    private String message;
+    @SerializedName("status")
+    private String status;
+
+    @SerializedName("data_transaksi")
+    private List<Order> dataTransaction;
 
     @SerializedName("data_order")
     private List<Order> dataOrder;
@@ -15,32 +18,31 @@ public class OrderEntity {
     @SerializedName("count")
     private int rowCount;
 
-    public OrderEntity(String message, List<Order> dataOrder,int rowCount) {
-        this.message = message;
+    public OrderEntity(String status, List<Order> dataTransaction, int rowCount, List<Order> dataOrder) {
+        this.status = status;
         this.dataOrder = dataOrder;
+        this.rowCount = rowCount;
+        this.dataTransaction = dataTransaction;
     }
 
     public int getRowCount() {
         return rowCount;
     }
 
-    public void setRowCount(int rowCount) {
-        this.rowCount = rowCount;
+    public String getstatus() {
+        return status;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public List<Order> getDataOrder() {
         return dataOrder;
     }
 
-    public void setDataOrder(List<Order> dataOrder) {
-        this.dataOrder = dataOrder;
+    public String getStatus() {
+        return status;
+    }
+
+    public List<Order> getDataTransaction() {
+        return dataTransaction;
     }
 }

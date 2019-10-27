@@ -28,18 +28,26 @@ public class ResponseLogin {
     @SerializedName("is_verified")
     private int isVerified;
 
-    public ResponseLogin(String username, String fname, String lname, String email, String password, String type, String idAddr, String street, String coordinate, String nameShop, int isVerified) {
+    @SerializedName("id_agent")
+    private String idAgent;
+
+    public ResponseLogin(String username, String fname, String lname, String email, String password, String type, String idAddr, String street, String coordinate, String nameShop, int isVerified, String idAgent) {
         this.username = username;
         this.fname = fname;
         this.lname = lname;
         this.email = email;
         this.password = password;
         this.type = type;
+        this.idAgent = idAgent;
         this.idAddr = idAddr;
         this.street = street;
         this.coordinate = coordinate;
         this.nameShop = nameShop;
         this.isVerified = isVerified;
+    }
+
+    public String getIdAgent() {
+        return idAgent;
     }
 
     public String getUsername() {

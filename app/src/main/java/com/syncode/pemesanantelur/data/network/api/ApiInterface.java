@@ -1,6 +1,7 @@
 package com.syncode.pemesanantelur.data.network.api;
 
 import com.syncode.pemesanantelur.data.model.MessageOnly;
+import com.syncode.pemesanantelur.data.model.order.Order;
 import com.syncode.pemesanantelur.data.model.order.OrderEntity;
 import com.syncode.pemesanantelur.data.model.login.Login;
 import com.syncode.pemesanantelur.data.model.product.Product;
@@ -26,18 +27,14 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("orders")
-    Call<OrderEntity> order(
+    Call<MessageOnly> order(
             @Field("idOrder") String idOrder,
-            @Field("namaProduct") String namaProduct,
-            @Field("jumlah") int jumlah,
-            @Field("harga") int harga,
-            @Field("tgl") String tgl,
-            @Field("status") int status,
-            @Field("namaAgent") String namaAgent,
-            @Field("alamat") String alamat,
-            @Field("namaKurir") String namaKurir,
-            @Field("keterangan") String keterangan,
-            @Field("ulasan") String ulasan
+            @Field("username") String username,
+            @Field("idAddress") String idAddress,
+            @Field("idAgent") String idAgent,
+            @Field("idProduct") String idProduct,
+            @Field("jumlahOrder") int jumlah,
+            @Field("tgl") String date
     );
 
     @GET("orders")
@@ -80,4 +77,8 @@ public interface ApiInterface {
     @POST("users/changepassword")
     Call<MessageOnly> changePassword(@Field("username") String username, @Field("oldPassword") String oldPassword, @Field("newPassword") String newPassword);
 
+
+    @FormUrlEncoded
+    @POST("transaction")
+    Call<OrderEntity> getOrder(@Field("username") String username);
 }

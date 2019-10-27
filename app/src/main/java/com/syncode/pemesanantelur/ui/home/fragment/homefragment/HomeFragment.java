@@ -23,7 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.model.product.Product;
+import com.syncode.pemesanantelur.data.model.product.ProductEntity;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
+import com.syncode.pemesanantelur.ui.home.HomeActivity;
 import com.syncode.pemesanantelur.ui.order.OrderActivity;
 import com.syncode.pemesanantelur.utils.SwitchActivity;
 
@@ -42,6 +44,8 @@ public class HomeFragment extends Fragment implements Observer<Product> {
 
     private Button btnBuy;
 
+    private ProductEntity productEntity;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -54,10 +58,11 @@ public class HomeFragment extends Fragment implements Observer<Product> {
         btnBuy = view.findViewById(R.id.btn_buy);
         cardContainer = view.findViewById(R.id.cardView);
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
-        productViewModel.setProductLiveData();
         productViewModel.getProductLiveData().observe(this, this);
         progressBar.setVisibility(View.VISIBLE);
-        btnBuy.setOnClickListener(view1 -> SwitchActivity.mainSwitch(getContext(), OrderActivity.class));
+        btnBuy.setOnClickListener(view1 -> {
+            SwitchActivity.mainSwitch(getContext(), OrderActivity.class, productEntity, "product");
+        });
 
     }
 
@@ -72,15 +77,18 @@ public class HomeFragment extends Fragment implements Observer<Product> {
     public void onChanged(Product product) {
         if (product.getListProduct().size() > 0) {
             if (product.getListProduct().size() == 1) {
+                String idProduct = product.getListProduct().get(0).getIdProduct();
                 String image = product.getListProduct().get(0).getImage();
                 String title = product.getListProduct().get(0).getProductName();
                 String desc = product.getListProduct().get(0).getDesc();
                 int price = product.getListProduct().get(0).getHarga();
+                String type = product.getListProduct().get(0).getType();
                 Glide.with(this).load(ApiClient.BASE_URL_IMAGE + image).into(imgProduct);
                 txtTitle.setText(title);
                 txtDesc.setText(desc);
-                txtPrice.setText("Rp." + String.format("%,d", price));
+                txtPrice.setText("Rp." + String.format("%,d", price) + "/Peti");
                 cardContainer.setVisibility(View.VISIBLE);
+                productEntity = new ProductEntity(idProduct, title, type, price, "", image);
             } else {
                 homeAdapter = new HomeAdapter(product.getListProduct(), getContext());
                 recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

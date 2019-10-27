@@ -1,7 +1,9 @@
 package com.syncode.pemesanantelur.ui.maps;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -9,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -20,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.local.sharepref.SystemDataLocal;
+import com.syncode.pemesanantelur.utils.DialogClass;
 
 import java.io.IOException;
 import java.util.List;
@@ -78,10 +82,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String latLong = latLng.latitude + "," + latLng.longitude;
                 SystemDataLocal systemDataLocal = new SystemDataLocal(this);
                 systemDataLocal.setCoordinate(allAddress, latLong);
-                onBackPressed();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            alertDialogYesOrNo();
         });
+    }
+
+
+    private void alertDialogYesOrNo() {
+        View v = getLayoutInflater().inflate(R.layout.alert_location_yes, null, false);
+        AlertDialog.Builder builder = DialogClass.dialog(this, v);
+        builder.setPositiveButton("Simpan", (dialogInterface, i) -> {
+            onBackPressed();
+        }).setNegativeButton("Tidak", (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

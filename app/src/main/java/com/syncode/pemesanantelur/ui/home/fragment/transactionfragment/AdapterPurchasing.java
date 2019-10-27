@@ -1,4 +1,4 @@
-package com.syncode.pemesanantelur.ui.transaction.fragment.purchasing;
+package com.syncode.pemesanantelur.ui.home.fragment.transactionfragment;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,8 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.model.order.Order;
+import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.ui.maps.MapsActivity;
 
 import java.util.List;
@@ -37,8 +39,9 @@ public class AdapterPurchasing extends RecyclerView.Adapter<AdapterPurchasing.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Order order = orderList.get(position);
-        holder.txtPrice.setText(String.valueOf(order.getHarga()));
-        holder.txtName.setText(order.getNamaProduct());
+        holder.txtPrice.setText(String.valueOf(order.getPriceAll()));
+        holder.txtName.setText(order.getProductName());
+        Glide.with(holder.itemView.getContext()).load(ApiClient.BASE_URL_IMAGE + order.getImage()).into(holder.imgProduct);
         holder.container.setOnClickListener(view -> {
             Intent intent = new Intent(holder.container.getContext(), MapsActivity.class);
             holder.container.getContext().startActivity(intent);
@@ -55,6 +58,7 @@ public class AdapterPurchasing extends RecyclerView.Adapter<AdapterPurchasing.Vi
         private TextView txtName, txtPrice;
         private ImageView imgProduct;
         private CardView container;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
