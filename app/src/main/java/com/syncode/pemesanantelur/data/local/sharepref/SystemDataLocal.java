@@ -38,11 +38,12 @@ public class SystemDataLocal {
         editor.putString("shop", usersData.getNameShop());
         editor.putString("idAddres", usersData.getIdAddr());
         editor.putInt("isverified", usersData.getIsVerified());
+        editor.putString("phone", usersData.getPhone());
         editor.putBoolean("login", true);
         editor.apply();
     }
 
-    public void editAllSessionLogin(String username, String password, String lname, String fname, String address, String email, String shop, String idAddr, int isVerified, String coordinate) {
+    public void editAllSessionLogin(String username, String password, String lname, String fname, String address, String email, String shop, String idAddr, int isVerified, String coordinate, String phone) {
         sharedPreferences = context.getSharedPreferences(KEY_USER, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("coordinate", coordinate);
@@ -54,6 +55,7 @@ public class SystemDataLocal {
         editor.putString("email", email);
         editor.putString("shop", shop);
         editor.putString("idAddres", address);
+        editor.putString("phone", phone);
         editor.putBoolean("login", true);
         editor.apply();
     }
@@ -78,7 +80,8 @@ public class SystemDataLocal {
         String nameShop = sharedPreferences.getString("shop", "");
         int isVerified = sharedPreferences.getInt("isverified", 0);
         String idAddres = sharedPreferences.getString("idAddres", "");
-        return new User(username, password, email, address, lName, fName, coordinate, nameShop, idAddres, isVerified,idAgent);
+        String phone = sharedPreferences.getString("phone", "");
+        return new User(username, password, email, address, lName, fName, coordinate, nameShop, idAddres, isVerified, idAgent, phone);
     }
 
     public boolean getCheckLogin() {

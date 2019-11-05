@@ -54,12 +54,10 @@ public class ProfileFragment extends Fragment implements Observer<MessageOnly> {
         edtAddress.setText(user.getAddress());
         edtFname.setText(user.getfName());
         edtlName.setText(user.getlName());
-        edtEmail.setInputType(InputType.TYPE_NULL);
+
         verificationEmailRepository = new VerificationEmailRepository();
         edtEmail.setOnClickListener(view1 -> alertDialogEmailVerify());
-        btnUbah.setOnClickListener(view12 -> {
-            edtEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        });
+        btnUbah.setOnClickListener(view12 -> edtEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS));
     }
 
     @Override
@@ -69,9 +67,12 @@ public class ProfileFragment extends Fragment implements Observer<MessageOnly> {
     }
 
 
+
+
     @Override
     public void onResume() {
         super.onResume();
+        edtEmail.setInputType(InputType.TYPE_NULL);
         if (systemDataLocal.getLoginData().getIsVerified() == 0) {
             edtEmail.setError("Verifikasi Email,Klik Disini !!");
             edtEmail.setEnabled(true);

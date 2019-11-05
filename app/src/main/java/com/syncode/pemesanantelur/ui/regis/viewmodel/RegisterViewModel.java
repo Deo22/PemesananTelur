@@ -14,8 +14,8 @@ public class RegisterViewModel extends ViewModel {
         registerRepository = new RegisterRepository();
     }
 
-    public LiveData<ResponRegister> getRegisterRespon(String username, String email, String password, String fname, String lname) {
-        return registerRepository.getResponRegister(username, email, password, fname, lname);
+    public LiveData<ResponRegister> getRegisterRespon(String username, String email, String password, String fname, String lname, String phone) {
+        return registerRepository.getResponRegister(username, email, password, fname, lname, phone);
     }
 
 

@@ -184,5 +184,4 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         inputTokenDialog();
         Toast.makeText(HomeActivity.this, messageOnly.getMessage(), Toast.LENGTH_LONG).show();
     }
-
 }

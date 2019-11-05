@@ -30,7 +30,7 @@ public class TransactionRepository {
             public void onResponse(Call<OrderEntity> call, Response<OrderEntity> response) {
                 if (response.body() != null) {
                     orderEntityMutableLiveData.postValue(response.body());
-                }else{
+                } else {
                     System.out.println("error");
                 }
             }

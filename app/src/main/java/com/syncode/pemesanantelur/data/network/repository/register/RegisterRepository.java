@@ -7,6 +7,8 @@ import com.syncode.pemesanantelur.data.model.register.ResponRegister;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.data.network.api.ApiInterface;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,8 +22,8 @@ public class RegisterRepository {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
-    public MutableLiveData<ResponRegister> getResponRegister(String username, String email, String password, String fname, String lname) {
-        Call<ResponRegister> requestOrder = apiInterface.registerUser(username, email, password, fname, lname);
+    public MutableLiveData<ResponRegister> getResponRegister(String username, String email, String password, String fname, String lname, String phone) {
+        Call<ResponRegister> requestOrder = apiInterface.registerUser(username, email, password, fname, lname, phone);
         requestOrder.enqueue(new Callback<ResponRegister>() {
             @Override
             public void onResponse(@NonNull Call<ResponRegister> call, @NonNull Response<ResponRegister> response) {

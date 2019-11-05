@@ -31,7 +31,10 @@ public class ResponseLogin {
     @SerializedName("id_agent")
     private String idAgent;
 
-    public ResponseLogin(String username, String fname, String lname, String email, String password, String type, String idAddr, String street, String coordinate, String nameShop, int isVerified, String idAgent) {
+    @SerializedName("phone")
+    private String phone;
+
+    public ResponseLogin(String username, String fname, String lname, String email, String password, String type, String idAddr, String street, String coordinate, String nameShop, int isVerified, String idAgent, String phone) {
         this.username = username;
         this.fname = fname;
         this.lname = lname;
@@ -44,6 +47,7 @@ public class ResponseLogin {
         this.coordinate = coordinate;
         this.nameShop = nameShop;
         this.isVerified = isVerified;
+        this.phone = phone;
     }
 
     public String getIdAgent() {
@@ -92,5 +96,9 @@ public class ResponseLogin {
 
     public int getIsVerified() {
         return isVerified;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 }

@@ -43,7 +43,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("users/register")
-    Call<ResponRegister> registerUser(@Field("username") String username, @Field("email") String email, @Field("password") String password, @Field("fname") String fname, @Field("lname") String lname);
+    Call<ResponRegister> registerUser(@Field("username") String username, @Field("email") String email, @Field("password") String password, @Field("fname") String fname, @Field("lname") String lname,@Field("phone")String phone);
 
 
     @FormUrlEncoded

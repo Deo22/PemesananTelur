@@ -13,8 +13,9 @@ public class User {
     private String idAddr;
     private int isVerified;
     private String idAgent;
+    private String phone;
 
-    public User(String username, String password, String email, String address, String lName, String fName, String coordinate, String nameShop, String idAddr, int isVerified, String idAgent) {
+    public User(String username, String password, String email, String address, String lName, String fName, String coordinate, String nameShop, String idAddr, int isVerified, String idAgent, String phone) {
         this.username = username;
         this.password = password;
         this.idAgent = idAgent;
@@ -26,6 +27,7 @@ public class User {
         this.fName = fName;
         this.coordinate = coordinate;
         this.nameShop = nameShop;
+        this.phone = phone;
     }
 
     public String getIdAddr() {
@@ -62,6 +64,10 @@ public class User {
 
     public String getIdAgent() {
         return idAgent;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public String getCoordinate() {

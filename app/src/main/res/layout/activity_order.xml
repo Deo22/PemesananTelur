@@ -22,7 +22,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_vertical"
@@ -47,31 +46,6 @@
                     android:paddingBottom="@dimen/margin_vertical"
                     android:textColor="@color/white" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="@dimen/margin_vertical"
-                android:background="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_vertical"
-                    android:text="@string/kualitas"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/spinnerQuality"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_vertical"
-                    android:gravity="start"
-                    android:textAlignment="viewStart" />
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

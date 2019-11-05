@@ -21,7 +21,7 @@ import com.syncode.pemesanantelur.utils.SwitchActivity;
 public class RegisterActivity extends AppCompatActivity {
 
 
-    private EditText edtUsername, edtPassword, edtEmail, edtLname, edtFname;
+    private EditText edtUsername, edtPassword, edtEmail, edtLname, edtFname, edtPhone;
     private RegisterViewModel registerViewModel;
 
     @Override
@@ -34,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         Button btnRegister = findViewById(R.id.btn_sign_up);
         edtFname = findViewById(R.id.edtFirstName);
         edtLname = findViewById(R.id.edtLastName);
+        edtPhone = findViewById(R.id.edt_phone);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0f);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,11 +64,12 @@ public class RegisterActivity extends AppCompatActivity {
         String email = edtEmail.getText().toString().trim();
         String lname = edtLname.getText().toString().trim();
         String fname = edtFname.getText().toString().trim();
-        registerViewModel.getRegisterRespon(username, email, password, fname, lname).observe(this, responRegister -> {
+        String phone = edtPhone.getText().toString().trim();
+        registerViewModel.getRegisterRespon(username, email, password, fname, lname, phone).observe(this, responRegister -> {
             if (responRegister.getUserData() != null) {
                 alertDialog.dismiss();
                 Toast.makeText(RegisterActivity.this, responRegister.getMessage(), Toast.LENGTH_LONG).show();
-                SwitchActivity.mainSwitch(RegisterActivity.this,ReRegisterActivity.class,username,"username");
+                SwitchActivity.mainSwitch(RegisterActivity.this, ReRegisterActivity.class, username, "username");
             } else {
                 alertDialog.dismiss();
                 Toast.makeText(RegisterActivity.this, responRegister.getMessage(), Toast.LENGTH_LONG).show();

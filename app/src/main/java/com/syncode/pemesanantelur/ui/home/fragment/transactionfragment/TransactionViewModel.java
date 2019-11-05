@@ -18,4 +18,8 @@ public class TransactionViewModel extends ViewModel {
     public LiveData<OrderEntity> getDataOrder(String username) {
         return transactionRepository.getOrderEntityMutableLiveData(username);
     }
+
+    public void clearData() {
+        transactionRepository.getOrderEntityMutableLiveData(null).setValue(null);
+    }
 }

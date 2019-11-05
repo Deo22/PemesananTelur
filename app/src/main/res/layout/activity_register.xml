@@ -13,30 +13,18 @@
         android:background="@drawable/bg_login_replace" />
 
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_vertical"
-        android:contentDescription="@string/logo"
-        android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <EditText
         android:id="@+id/edt_username"
+        style="@style/editText"
+        android:layout_marginTop="120dp"
         android:drawableStart="@drawable/ic_person"
         android:drawableLeft="@drawable/ic_person"
         android:hint="@string/username"
         android:inputType="text"
         android:padding="@dimen/padding_edt"
-        android:layout_marginTop="50dp"
-        style="@style/editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="Autofill" />
 
     <View
@@ -120,8 +108,10 @@
         app:layout_constraintTop_toBottomOf="@+id/line5"
         />
 
+
+
     <View
-        android:id="@+id/line2"
+        android:id="@+id/line10"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="@dimen/margin_horizontal"
@@ -134,17 +124,45 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
     <EditText
+        android:id="@+id/edt_phone"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawableLeft="@drawable/ic_lock"
+        android:hint="@string/notelp"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        style="@style/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line10"
+        tools:ignore="UnusedAttribute" />
+
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_horizontal"
+        android:layout_marginLeft="@dimen/margin_horizontal"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:layout_marginRight="@dimen/margin_horizontal"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_phone" />
+
+    <EditText
         android:id="@+id/edt_password"
+        style="@style/editText"
         android:drawableStart="@drawable/ic_lock"
         android:drawableLeft="@drawable/ic_lock"
         android:hint="@string/password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
-        style="@style/editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line2"
         tools:ignore="UnusedAttribute" />
+
 
     <Button
         android:id="@+id/btn_sign_up"

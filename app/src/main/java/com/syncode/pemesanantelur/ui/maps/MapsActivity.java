@@ -87,6 +87,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             alertDialogYesOrNo();
         });
+
+        mMap.setMyLocationEnabled(true);
     }
 
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.model.product.ProductEntity;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
+import com.syncode.pemesanantelur.ui.order.OrderActivity;
+import com.syncode.pemesanantelur.utils.SwitchActivity;
 
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     private Context context;
 
-    public HomeAdapter(List<ProductEntity> productList, Context context) {
+    HomeAdapter(List<ProductEntity> productList, Context context) {
         this.productList = productList;
         this.context = context;
     }
@@ -40,10 +43,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull HomeAdapter.ViewHolder holder, int position) {
         ProductEntity product = productList.get(position);
-        holder.txtPrice.setText("Rp."+String.format("%,d", product.getHarga()));
+        holder.txtPrice.setText("Rp." + String.format("%,d", product.getHarga()));
         holder.txtName.setText(product.getProductName());
         Glide.with(context).load(ApiClient.BASE_URL_IMAGE + product.getImage()).into(holder.imgProduct);
-
+        holder.btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivity.mainSwitch(holder.itemView.getContext(), OrderActivity.class, product, "product");
+            }
+        });
     }
 
     @Override
@@ -51,16 +59,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         return productList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtName;
-        TextView txtPrice;
-        ImageView imgProduct;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView txtName;
+        private TextView txtPrice;
+        private ImageView imgProduct;
+        private Button btnBuy;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
             txtPrice = itemView.findViewById(R.id.txtPrice);
             imgProduct = itemView.findViewById(R.id.imageProduct);
+            btnBuy = itemView.findViewById(R.id.btn_buy);
         }
     }
 }

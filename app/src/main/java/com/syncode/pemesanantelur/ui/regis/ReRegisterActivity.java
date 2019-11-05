@@ -23,7 +23,7 @@ import com.syncode.pemesanantelur.ui.regis.viewmodel.RegisterViewModel;
 import com.syncode.pemesanantelur.utils.DialogClass;
 import com.syncode.pemesanantelur.utils.SwitchActivity;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Random;
 
 public class ReRegisterActivity extends AppCompatActivity {
@@ -56,8 +56,11 @@ public class ReRegisterActivity extends AppCompatActivity {
         btnSimpan.setOnClickListener(view -> {
             street = systemDataLocal.getCoordinate().getString("addr", "");
             coordinate = systemDataLocal.getCoordinate().getString("coordinate", "");
-            Date date = java.util.Calendar.getInstance().getTime();
-            String idAgent = "AGN-" + (date.getTime() + new Random().nextInt());
+            Calendar calendar = Calendar.getInstance();
+            int h = calendar.get(Calendar.HOUR);
+            int m = calendar.get(Calendar.MINUTE);
+            int s = calendar.get(Calendar.SECOND);
+            String idAgent = "AGN-" + (h + m + s + new Random().nextInt(10));
             String nameAgent = edtNameShop.getText().toString().trim();
             @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.loading_alert, null, false);
             alertDialog = DialogClass.dialog(ReRegisterActivity.this, v).create();
