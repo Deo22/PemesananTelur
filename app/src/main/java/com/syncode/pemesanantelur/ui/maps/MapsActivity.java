@@ -1,9 +1,9 @@
 package com.syncode.pemesanantelur.ui.maps;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -14,28 +14,39 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.local.sharepref.SystemDataLocal;
+import com.syncode.pemesanantelur.data.model.TrackingModel;
+import com.syncode.pemesanantelur.data.model.order.Order;
 import com.syncode.pemesanantelur.utils.DialogClass;
+import com.syncode.pemesanantelur.utils.LatLngInterpolator;
+import com.syncode.pemesanantelur.utils.MarkerAnimation;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, Observer<TrackingModel> {
 
     private GoogleMap mMap;
 
     private LocationManager lm;
 
     private static final int CODE_PERMISSION_GPS = 1;
+    private Marker courierMarker;
+    private Order order;
+    private MapsViewModel mapsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +54,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
         lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-
+        Intent intent = getIntent();
+        order = intent.getParcelableExtra("order");
+        mapsViewModel = ViewModelProviders.of(this).get(MapsViewModel.class);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (order != null) {
+            String idTransaction = order.getIdTransaksi();
+            mapsViewModel.getTracking(idTransaction).observe(this, this);
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -60,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (isGpsEnabled) {
                     Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     if (location != null) {
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 20.0f));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15.0f));
                     }
                 }
             }
@@ -93,15 +116,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private void alertDialogYesOrNo() {
-        View v = getLayoutInflater().inflate(R.layout.alert_location_yes, null, false);
+        @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.alert_location_yes, null, false);
         AlertDialog.Builder builder = DialogClass.dialog(this, v);
-        builder.setPositiveButton("Simpan", (dialogInterface, i) -> {
-            onBackPressed();
-        }).setNegativeButton("Tidak", (dialogInterface, i) -> {
+        builder.setPositiveButton("Simpan", (dialogInterface, i) -> onBackPressed()).setNegativeButton("Tidak", (dialogInterface, i) -> {
             dialogInterface.dismiss();
         });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onChanged(TrackingModel trackingModel) {
+        if (trackingModel != null) {
+            LatLng latLng = new LatLng(trackingModel.getLat(), trackingModel.getLont());
+            if (mMap != null) {
+                if (courierMarker == null) {
+                    courierMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.car2)).position(latLng));
+                } else {
+                    MarkerAnimation.animateMarkerToGB(courierMarker, latLng, new LatLngInterpolator.Spherical());
+                }
+            }
+
+        } else {
+            System.out.println("Selesai Order");
+        }
     }
 }
