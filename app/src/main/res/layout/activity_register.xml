@@ -42,16 +42,15 @@
 
     <EditText
         android:id="@+id/edtFirstName"
+        style="@style/editText"
         android:drawableStart="@drawable/ic_person"
         android:drawableLeft="@drawable/ic_person"
         android:hint="@string/nama_depan"
         android:inputType="text"
-        style="@style/editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line3"
         tools:ignore="Autofill" />
-
 
 
     <View
@@ -68,18 +67,17 @@
         app:layout_constraintTop_toBottomOf="@+id/edtFirstName" />
 
     <EditText
-        tools:ignore="Autofill"
         android:id="@+id/edtLastName"
         style="@style/editText"
-        android:inputType="text"
         android:background="@color/white_transparent"
         android:drawableStart="@drawable/ic_person"
         android:drawableLeft="@drawable/ic_email"
         android:hint="@string/nama_belakang"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line" />
-
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        tools:ignore="Autofill" />
 
 
     <View
@@ -97,17 +95,15 @@
 
     <EditText
         android:id="@+id/edt_email"
+        style="@style/editText"
         android:drawableStart="@drawable/ic_email"
         android:drawableLeft="@drawable/ic_email"
         android:hint="@string/email"
-        tools:ignore="Autofill"
         android:inputType="textEmailAddress"
-        style="@style/editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line5"
-        />
-
+        tools:ignore="Autofill" />
 
 
     <View
@@ -125,12 +121,12 @@
 
     <EditText
         android:id="@+id/edt_phone"
-        android:drawableStart="@drawable/ic_lock"
-        android:drawableLeft="@drawable/ic_lock"
+        style="@style/editText"
+        android:drawableStart="@drawable/ic_phone"
+        android:drawableLeft="@drawable/ic_phone"
         android:hint="@string/notelp"
         android:importantForAutofill="no"
         android:inputType="phone"
-        style="@style/editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line10"

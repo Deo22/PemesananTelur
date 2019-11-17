@@ -1,9 +1,9 @@
 package com.syncode.pemesanantelur.data.network.api;
 
 import com.syncode.pemesanantelur.data.model.MessageOnly;
-import com.syncode.pemesanantelur.data.model.order.Order;
+import com.syncode.pemesanantelur.data.model.ResponseChangeCount;
 import com.syncode.pemesanantelur.data.model.order.OrderEntity;
-import com.syncode.pemesanantelur.data.model.login.Login;
+import com.syncode.pemesanantelur.data.model.login.ResponseLogin;
 import com.syncode.pemesanantelur.data.model.product.Product;
 import com.syncode.pemesanantelur.data.model.register.ResponRegister;
 
@@ -18,11 +18,19 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("users/login")
-    Call<Login> login(@Field("username") String username, @Field("password") String password);
+    Call<ResponseLogin> login(@Field("username") String username, @Field("password") String password);
 
 
     @GET("product")
     Call<Product> getProduct();
+
+    @FormUrlEncoded
+    @POST("orders/removeorder")
+    Call<MessageOnly> removeOrder(@Field("id_order") String idOrder);
+
+    @FormUrlEncoded
+    @POST("orders/changeentity")
+    Call<ResponseChangeCount> changeCountTotal(@Field("id_product") String idProduct, @Field("entity") int count);
 
 
     @FormUrlEncoded
@@ -43,7 +51,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("users/register")
-    Call<ResponRegister> registerUser(@Field("username") String username, @Field("email") String email, @Field("password") String password, @Field("fname") String fname, @Field("lname") String lname,@Field("phone")String phone);
+    Call<ResponRegister> registerUser(@Field("username") String username, @Field("email") String email, @Field("password") String password, @Field("fname") String fname, @Field("lname") String lname, @Field("phone") String phone);
 
 
     @FormUrlEncoded

@@ -101,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String state = addresses.get(0).getAdminArea();
                 String zip = addresses.get(0).getPostalCode();
                 String country = addresses.get(0).getCountryName();
-                String allAddress = address + " " + city + " " + state + " " + zip + " " + country;
+                String allAddress = address + " " + city + " " + state + " " + zip;
                 String latLong = latLng.latitude + "," + latLng.longitude;
                 SystemDataLocal systemDataLocal = new SystemDataLocal(this);
                 systemDataLocal.setCoordinate(allAddress, latLong);

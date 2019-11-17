@@ -43,6 +43,7 @@ public class ProfileFragment extends Fragment implements Observer<MessageOnly> {
         EditText edtlName = view.findViewById(R.id.edtLastName);
         EditText edtAddress = view.findViewById(R.id.edt_address);
         EditText edtShop = view.findViewById(R.id.edt_shop);
+        EditText edtPhone = view.findViewById(R.id.edt_phone);
         edtEmail = view.findViewById(R.id.edt_email);
         edtUsername = view.findViewById(R.id.edt_username);
         systemDataLocal = new SystemDataLocal(getContext());
@@ -54,6 +55,7 @@ public class ProfileFragment extends Fragment implements Observer<MessageOnly> {
         edtAddress.setText(user.getAddress());
         edtFname.setText(user.getfName());
         edtlName.setText(user.getlName());
+        edtPhone.setText(user.getPhone());
 
         verificationEmailRepository = new VerificationEmailRepository();
         edtEmail.setOnClickListener(view1 -> alertDialogEmailVerify());

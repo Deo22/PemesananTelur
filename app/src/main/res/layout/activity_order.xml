@@ -170,37 +170,24 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
                 <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_horizontal"
-                    android:layout_marginLeft="@dimen/margin_horizontal"
-                    android:layout_marginTop="@dimen/margin_vertical"
-                    android:text="@string/ongkos_kirim"
-                    android:textColor="@color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-                <TextView
                     android:id="@+id/txtAllPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_horizontal"
                     android:layout_marginRight="@dimen/margin_horizontal"
                     android:textColor="@color/white"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView6" />
 
-                <TextView
-                    android:id="@+id/txtPriceSend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_horizontal"
-                    android:layout_marginRight="@dimen/margin_horizontal"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/progressLoadTotal"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    app:indicatorName="BallPulseIndicator"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView7" />
+                    app:layout_constraintTop_toTopOf="@+id/textView6" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
@@ -229,6 +216,16 @@
                 android:text="@string/total_pembayaran"
                 android:textColor="@color/grey"
                 android:textStyle="bold" />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loadingAllPrice"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                app:indicatorColor="@color/colorPrimary"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txtCountPrice"

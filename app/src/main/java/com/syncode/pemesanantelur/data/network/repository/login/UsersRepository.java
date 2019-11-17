@@ -3,7 +3,7 @@ package com.syncode.pemesanantelur.data.network.repository.login;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.syncode.pemesanantelur.data.model.login.Login;
+import com.syncode.pemesanantelur.data.model.login.ResponseLogin;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.data.network.api.ApiInterface;
 
@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class UsersRepository {
 
-    private MutableLiveData<Login> usersData = new MutableLiveData<>();
+    private MutableLiveData<ResponseLogin> usersData = new MutableLiveData<>();
     private ApiInterface apiInterface;
 
     public UsersRepository() {
@@ -22,11 +22,11 @@ public class UsersRepository {
 
     }
 
-    public MutableLiveData<Login> getLoginResponse(String username, String password) {
-        Call<Login> requestLogin = apiInterface.login(username, password);
-        requestLogin.enqueue(new Callback<Login>() {
+    public MutableLiveData<ResponseLogin> getLoginResponse(String username, String password) {
+        Call<ResponseLogin> requestLogin = apiInterface.login(username, password);
+        requestLogin.enqueue(new Callback<ResponseLogin>() {
             @Override
-            public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
+            public void onResponse(@NonNull Call<ResponseLogin> call, @NonNull Response<ResponseLogin> response) {
                 if (response.body() != null) {
                     usersData.postValue(response.body());
                 } else {
@@ -35,7 +35,7 @@ public class UsersRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Login> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ResponseLogin> call, @NonNull Throwable t) {
                 System.out.println(t.getMessage());
             }
         });

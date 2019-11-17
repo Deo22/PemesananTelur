@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.local.sharepref.SystemDataLocal;
@@ -40,6 +41,7 @@ public class TransactionFragment extends Fragment {
     private User user;
     private List<Order> tmpAllTransaction = new ArrayList<>();
     private LinearLayout errorLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -47,10 +49,12 @@ public class TransactionFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycleView);
         progressBar = view.findViewById(R.id.progressBar);
         errorLayout = view.findViewById(R.id.errorLayout);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         transactionViewModel = ViewModelProviders.of(this).get(TransactionViewModel.class);
         SystemDataLocal dataLocal = new SystemDataLocal(this.getContext());
         user = dataLocal.getLoginData();
         progressBar.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -62,7 +66,8 @@ public class TransactionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        transactionViewModel.getDataOrder(user.getUsername()).observe(this, orderEntity -> {
+        tmpAllTransaction.clear();
+        transactionViewModel.getDataOrder(user.getUsername()).observe(this,orderEntity -> {
             tmpAllTransaction.clear();
             if (orderEntity.getDataTransaction() != null) {
                 tmpAllTransaction.addAll(orderEntity.getDataTransaction());
@@ -73,14 +78,15 @@ public class TransactionFragment extends Fragment {
             if (tmpAllTransaction.size() > 0) {
                 progressBar.setVisibility(View.GONE);
                 errorLayout.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
                 adapterTransaction = new AdapterTransaction(tmpAllTransaction);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(adapterTransaction);
-            }else{
+            } else {
                 progressBar.setVisibility(View.GONE);
                 errorLayout.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
             }
-
         });
     }
 

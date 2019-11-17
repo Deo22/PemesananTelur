@@ -23,6 +23,7 @@ import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.ui.order.viewmodel.OrderViewModel;
 import com.syncode.pemesanantelur.utils.DialogClass;
 import com.syncode.pemesanantelur.utils.Formula;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,16 +31,21 @@ import java.util.Date;
 import java.util.Random;
 
 
-public class OrderActivity extends AppCompatActivity implements Observer<MessageOnly> {
+public class OrderActivity extends AppCompatActivity implements Observer<MessageOnly>, View.OnClickListener {
 
 
-    private TextView txtAddress, txtName, txtPrice, txtPriceAll, txtCountPrice, txtCount, txtPriceSend;
+    private TextView txtAddress, txtName, txtPrice, txtPriceAll, txtCountPrice, txtCount;
 
     private Button btnBuy, btnPlus, btnMinus;
     private ImageView imgProduct;
     private AlertDialog alertDialog;
     private OrderViewModel orderViewModel;
 
+    private int countBuy = 1;
+    private String idProduct;
+
+    private AVLoadingIndicatorView progressLoadTotal;
+    private AVLoadingIndicatorView progressLoadTotalAll;
 
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
@@ -52,47 +58,45 @@ public class OrderActivity extends AppCompatActivity implements Observer<Message
         txtPriceAll = findViewById(R.id.txtAllPrice);
         txtCountPrice = findViewById(R.id.txtCountPrice);
         txtCount = findViewById(R.id.txtCount);
-        txtPriceSend = findViewById(R.id.txtPriceSend);
         btnBuy = findViewById(R.id.btn_buy);
         btnPlus = findViewById(R.id.btnPlus);
         btnMinus = findViewById(R.id.btnMinus);
         imgProduct = findViewById(R.id.imgProduct);
+        progressLoadTotal = findViewById(R.id.progressLoadTotal);
+        progressLoadTotalAll = findViewById(R.id.loadingAllPrice);
         Intent getProduct = getIntent();
         SystemDataLocal systemDataLocal = new SystemDataLocal(this);
+
         ProductEntity product = getProduct.getParcelableExtra("product");
         if (product != null) {
             txtAddress.setText(systemDataLocal.getLoginData().getAddress());
             txtName.setText(product.getProductName());
             txtPrice.setText("Rp." + String.format("%,d", product.getHarga()) + "/Peti");
             Glide.with(this).load(ApiClient.BASE_URL_IMAGE + product.getImage()).into(imgProduct);
-            txtCount.setText("1");
+            txtCount.setText(String.valueOf(countBuy));
             txtPriceAll.setText("Rp." + String.format("%,d", product.getHarga()));
-            txtPriceSend.setText("Rp.0,0");
             txtCountPrice.setText("Rp." + String.format("%,d", product.getHarga()));
             orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
+            btnMinus.setOnClickListener(this);
+            btnPlus.setOnClickListener(this);
             String username = systemDataLocal.getLoginData().getUsername();
             String idAddress = systemDataLocal.getLoginData().getIdAddr();
             String idAgent = systemDataLocal.getLoginData().getIdAgent();
-            String idProduct = product.getIdProduct();
-            int countOrder = Integer.valueOf(txtCount.getText().toString());
+            idProduct = product.getIdProduct();
             @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date objDate = new Date();
             String dateOrd = formatter.format(objDate);
             btnBuy.setOnClickListener(view -> {
                 Calendar calendar = Calendar.getInstance();
-                int h = calendar.get(Calendar.HOUR);
                 int m = calendar.get(Calendar.MINUTE);
                 int s = calendar.get(Calendar.SECOND);
-                String idOrder = "ORD-" + (h + "" + "" + m + "" + s + new Random().nextInt(10));
+                String idOrder = "ORD-" + ((new Random().nextInt(9) + m) + "" + s);
                 @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.loading_alert, null, false);
                 alertDialog = DialogClass.dialog(this, v).create();
                 alertDialog.show();
-                orderViewModel.getOrderLiveData(idOrder, username, idAddress, idAgent, idProduct, countOrder, dateOrd).observe(this, this);
-                double distance = Formula.haversineFormula(107.618633, 107.618279, -6.901361, -6.811771);
-                System.out.println(String.format("%.2f", distance) + " KM");
+                orderViewModel.getOrderLiveData(idOrder, username, idAddress, idAgent, idProduct, countBuy, dateOrd).observe(this, this);
             });
         }
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setElevation(0f);
@@ -113,4 +117,30 @@ public class OrderActivity extends AppCompatActivity implements Observer<Message
         return super.onSupportNavigateUp();
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.btnMinus) {
+            if (countBuy != 0) {
+                countBuy--;
+            }
+        } else if (view.getId() == R.id.btnPlus) {
+            countBuy++;
+        }
+        txtPriceAll.setVisibility(View.GONE);
+        txtCountPrice.setVisibility(View.GONE);
+        progressLoadTotal.setVisibility(View.VISIBLE);
+        progressLoadTotalAll.setVisibility(View.VISIBLE);
+        orderViewModel.getTotalWithCountBuy(idProduct, countBuy).observe(this, responseChangeCount -> {
+            if (responseChangeCount != null) {
+                txtPriceAll.setVisibility(View.VISIBLE);
+                txtPriceAll.setText("Rp.".concat(responseChangeCount.getTotal()));
+                progressLoadTotal.setVisibility(View.GONE);
+                progressLoadTotalAll.setVisibility(View.GONE);
+                txtCountPrice.setVisibility(View.VISIBLE);
+                txtCountPrice.setText("Rp.".concat(responseChangeCount.getTotal()));
+
+            }
+        });
+        txtCount.setText(String.valueOf(countBuy));
+    }
 }

@@ -3,7 +3,7 @@ package com.syncode.pemesanantelur.data.local.sharepref;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.syncode.pemesanantelur.data.model.login.ResponseLogin;
+import com.syncode.pemesanantelur.data.model.login.Login;
 import com.syncode.pemesanantelur.data.model.user.User;
 
 public class SystemDataLocal {
@@ -12,10 +12,10 @@ public class SystemDataLocal {
     private Context context;
     private static final String KEY_USER = "User";
     private static final String KEY_ADDR = "address";
-    private ResponseLogin usersData;
+    private Login usersData;
 
 
-    public SystemDataLocal(Context context, ResponseLogin usersData) {
+    public SystemDataLocal(Context context, Login usersData) {
         this.context = context;
         this.usersData = usersData;
     }

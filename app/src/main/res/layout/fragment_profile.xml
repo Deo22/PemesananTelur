@@ -11,21 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/margin_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|bottom"
-            android:layout_above="@id/cardView2">
-
-            <ImageView
-                android:id="@+id/circleImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_man" />
-        </LinearLayout>
-
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
@@ -87,7 +72,8 @@
                     android:drawableStart="@drawable/ic_person"
                     android:drawableLeft="@drawable/ic_person"
                     android:enabled="false"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                     />
 
                 <View
                     android:layout_width="match_parent"
@@ -131,6 +117,24 @@
                     android:background="@color/white" />
 
                 <EditText
+                    android:id="@+id/edt_phone"
+                    style="@style/editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_phone"
+                    android:drawableLeft="@drawable/ic_phone"
+                    android:enabled="false"
+                    android:singleLine="true"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_horizontal"
+                    android:layout_marginRight="@dimen/margin_horizontal"
+                    android:background="@color/white" />
+
+                <EditText
                     android:id="@+id/edt_address"
                     style="@style/editText"
                     android:layout_width="match_parent"
@@ -139,8 +143,8 @@
                     android:drawableLeft="@drawable/ic_location"
                     android:enabled="false"
                     android:gravity="start"
-                    android:lines="3"
-                    android:textAlignment="viewStart" />
+                    android:lines="2"
+                    android:textAlignment="textStart" />
 
                 <View
                     android:layout_width="match_parent"

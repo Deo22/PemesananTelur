@@ -3,7 +3,6 @@ package com.syncode.pemesanantelur.ui.login;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -19,7 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.syncode.pemesanantelur.R;
 import com.syncode.pemesanantelur.data.local.sharepref.SystemDataLocal;
-import com.syncode.pemesanantelur.data.model.login.Login;
+import com.syncode.pemesanantelur.data.model.login.ResponseLogin;
 import com.syncode.pemesanantelur.ui.login.viewmodel.LoginViewModel;
 import com.syncode.pemesanantelur.ui.forget.ForgetActivity;
 import com.syncode.pemesanantelur.ui.home.HomeActivity;
@@ -27,7 +26,7 @@ import com.syncode.pemesanantelur.ui.regis.RegisterActivity;
 import com.syncode.pemesanantelur.utils.DialogClass;
 import com.syncode.pemesanantelur.utils.SwitchActivity;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Observer<Login> {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Observer<ResponseLogin> {
 
 
     private EditText edtPassword, edtUsername;
@@ -75,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onChanged(Login login) {
+    public void onChanged(ResponseLogin login) {
         if (login.getuserData() != null) {
             alertDialog.dismiss();
             System.out.println(login.getuserData().getIsVerified());

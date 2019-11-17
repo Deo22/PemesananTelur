@@ -3,12 +3,12 @@ package com.syncode.pemesanantelur.ui.login.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.syncode.pemesanantelur.data.model.login.Login;
+import com.syncode.pemesanantelur.data.model.login.ResponseLogin;
 import com.syncode.pemesanantelur.data.network.repository.login.UsersRepository;
 
 public class LoginViewModel extends ViewModel {
 
-    private LiveData<Login> userEntityLiveData;
+    private LiveData<ResponseLogin> userEntityLiveData;
     private UsersRepository usersRepository;
 
 
@@ -22,7 +22,7 @@ public class LoginViewModel extends ViewModel {
     }
 
 
-    public LiveData<Login> getUserEntityLiveData() {
+    public LiveData<ResponseLogin> getUserEntityLiveData() {
         return userEntityLiveData;
     }
 }

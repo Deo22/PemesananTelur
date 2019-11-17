@@ -1,12 +1,10 @@
 package com.syncode.pemesanantelur.data.network.repository.order;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.syncode.pemesanantelur.data.model.MessageOnly;
-import com.syncode.pemesanantelur.data.model.order.OrderEntity;
+import com.syncode.pemesanantelur.data.model.ResponseChangeCount;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.data.network.api.ApiInterface;
 
@@ -21,7 +19,7 @@ public class OrderRepository {
 
     private MutableLiveData<MessageOnly> orderData = new MutableLiveData<>();
     private ApiInterface apiInterface;
-    private final String DEBUG_POS = this.getClass().getSimpleName();
+
 
     public OrderRepository() {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -34,25 +32,56 @@ public class OrderRepository {
             public void onResponse(@NonNull Call<MessageOnly> call, @NonNull Response<MessageOnly> response) {
                 if (response.body() != null) {
                     orderData.postValue(response.body());
-                } else {
-                    Log.d(DEBUG_POS, String.valueOf(response.code()));
-                }
-                try {
-                    if (response.errorBody() != null) {
-                        System.out.println(response.errorBody().string());
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MessageOnly> call, @NonNull Throwable t) {
-                Log.d(DEBUG_POS, t.getMessage());
+                orderData.postValue(null);
             }
         });
 
         return orderData;
     }
 
+    public MutableLiveData<ResponseChangeCount> getTotalWithCountBuy(String id_product, int count) {
+        MutableLiveData<ResponseChangeCount> responseChangeCountMutableLiveData = new MutableLiveData<>();
+        Call<ResponseChangeCount> responseChangeCountCall = apiInterface.changeCountTotal(id_product, count);
+        responseChangeCountCall.enqueue(new Callback<ResponseChangeCount>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseChangeCount> call, @NonNull Response<ResponseChangeCount> response) {
+                if (response.body() != null) {
+                    responseChangeCountMutableLiveData.postValue(response.body());
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseChangeCount> call, @NonNull Throwable t) {
+                responseChangeCountMutableLiveData.postValue(null);
+
+            }
+        });
+        return responseChangeCountMutableLiveData;
+    }
+
+    public MutableLiveData<MessageOnly> removeOrder(String idOrder) {
+        MutableLiveData<MessageOnly> removeOrderLiveData = new MutableLiveData<>();
+        Call<MessageOnly> messageOnlyCall = apiInterface.removeOrder(idOrder);
+        messageOnlyCall.enqueue(new Callback<MessageOnly>() {
+            @Override
+            public void onResponse(@NonNull Call<MessageOnly> call, @NonNull Response<MessageOnly> response) {
+                if (response.body() != null) {
+                    removeOrderLiveData.postValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MessageOnly> call, @NonNull Throwable t) {
+                removeOrderLiveData.postValue(null);
+            }
+        });
+
+        return removeOrderLiveData;
+    }
 }
