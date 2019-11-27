@@ -43,15 +43,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull HomeAdapter.ViewHolder holder, int position) {
         ProductEntity product = productList.get(position);
-        holder.txtPrice.setText("Rp." + String.format("%,d", product.getHarga()));
+        holder.txtPrice.setText("Rp." + String.format("%,d", product.getHarga())+" /Peti");
+        holder.txtQuality.setText(product.getQuality());
         holder.txtName.setText(product.getProductName());
-        Glide.with(context).load(ApiClient.BASE_URL_IMAGE + product.getImage()).into(holder.imgProduct);
-        holder.btnBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SwitchActivity.mainSwitch(holder.itemView.getContext(), OrderActivity.class, product, "product");
-            }
-        });
+        String imageUrl = ApiClient.BASE_URL_IMAGE + product.getImage();
+        System.out.println(imageUrl);
+        Glide.with(context).load(imageUrl).into(holder.imgProduct);
+        holder.btnBuy.setOnClickListener(view -> SwitchActivity.mainSwitch(holder.itemView.getContext(), OrderActivity.class, product, "product"));
     }
 
     @Override
@@ -62,6 +60,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtName;
         private TextView txtPrice;
+        private TextView txtQuality;
         private ImageView imgProduct;
         private Button btnBuy;
 
@@ -70,6 +69,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             txtName = itemView.findViewById(R.id.txtName);
             txtPrice = itemView.findViewById(R.id.txtPrice);
             imgProduct = itemView.findViewById(R.id.imageProduct);
+            txtQuality = itemView.findViewById(R.id.txtQuality);
             btnBuy = itemView.findViewById(R.id.btn_buy);
         }
     }

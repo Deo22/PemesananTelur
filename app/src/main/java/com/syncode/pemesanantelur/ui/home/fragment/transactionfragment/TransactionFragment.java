@@ -50,10 +50,10 @@ public class TransactionFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         errorLayout = view.findViewById(R.id.errorLayout);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
-        transactionViewModel = ViewModelProviders.of(this).get(TransactionViewModel.class);
         SystemDataLocal dataLocal = new SystemDataLocal(this.getContext());
         user = dataLocal.getLoginData();
         progressBar.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setOnRefreshListener(this::loadData);
 
     }
 
@@ -66,6 +66,12 @@ public class TransactionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        loadData();
+    }
+
+
+    private  void loadData(){
+        transactionViewModel = ViewModelProviders.of(this).get(TransactionViewModel.class);
         tmpAllTransaction.clear();
         transactionViewModel.getDataOrder(user.getUsername()).observe(this,orderEntity -> {
             tmpAllTransaction.clear();
@@ -87,7 +93,7 @@ public class TransactionFragment extends Fragment {
                 errorLayout.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setVisibility(View.GONE);
             }
+            swipeRefreshLayout.setRefreshing(false);
         });
     }
-
 }

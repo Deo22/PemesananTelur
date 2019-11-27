@@ -26,6 +26,9 @@ public class ProductEntity implements Parcelable {
     @SerializedName("description")
     private String desc;
 
+    @SerializedName("quality")
+    private String quality;
+
 
     public ProductEntity(String idProduct, String productName, String type, int harga, String desc, String image) {
         this.idProduct = idProduct;
@@ -50,6 +53,9 @@ public class ProductEntity implements Parcelable {
         return harga;
     }
 
+    public String getQuality() {
+        return quality;
+    }
 
     public String getDesc() {
         return desc;
@@ -72,6 +78,7 @@ public class ProductEntity implements Parcelable {
         dest.writeInt(this.harga);
         dest.writeString(this.image);
         dest.writeString(this.desc);
+        dest.writeString(this.quality);
     }
 
     protected ProductEntity(Parcel in) {
@@ -81,6 +88,7 @@ public class ProductEntity implements Parcelable {
         this.harga = in.readInt();
         this.image = in.readString();
         this.desc = in.readString();
+        this.quality = in.readString();
     }
 
     public static final Parcelable.Creator<ProductEntity> CREATOR = new Parcelable.Creator<ProductEntity>() {

@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageProduct" />
 
     <TextView
-        android:id="@+id/txtPrice"
+        android:id="@+id/txtQuality"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_horizontal"
@@ -46,6 +46,20 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageProduct"
         app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_horizontal"
+        android:layout_marginLeft="@dimen/margin_horizontal"
+        android:layout_marginTop="@dimen/margin_top"
+        android:text="@string/rp29_800"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/grey"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageProduct"
+        app:layout_constraintTop_toBottomOf="@+id/txtQuality" />
 
     <Button
         android:id="@+id/btn_buy"
