@@ -7,6 +7,8 @@ import com.syncode.pemesanantelur.data.model.login.ResponseLogin;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.data.network.api.ApiInterface;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,7 +16,7 @@ import retrofit2.Response;
 
 public class UsersRepository {
 
-    private MutableLiveData<ResponseLogin> usersData = new MutableLiveData<>();
+
     private ApiInterface apiInterface;
 
     public UsersRepository() {
@@ -23,6 +25,7 @@ public class UsersRepository {
     }
 
     public MutableLiveData<ResponseLogin> getLoginResponse(String username, String password) {
+        MutableLiveData<ResponseLogin> usersData = new MutableLiveData<>();
         Call<ResponseLogin> requestLogin = apiInterface.login(username, password);
         requestLogin.enqueue(new Callback<ResponseLogin>() {
             @Override
@@ -30,13 +33,14 @@ public class UsersRepository {
                 if (response.body() != null) {
                     usersData.postValue(response.body());
                 } else {
-                    System.out.println("Data Not Found");
+                    usersData.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseLogin> call, @NonNull Throwable t) {
-                System.out.println(t.getMessage());
+                usersData.postValue(null);
+
             }
         });
         return usersData;

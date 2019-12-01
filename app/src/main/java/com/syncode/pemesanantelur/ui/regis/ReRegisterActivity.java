@@ -29,9 +29,7 @@ import java.util.Random;
 public class ReRegisterActivity extends AppCompatActivity {
 
 
-    private ImageView pickAddres;
     private EditText edtNameShop;
-    private Button btnSimpan;
 
 
     private AlertDialog alertDialog;
@@ -43,13 +41,11 @@ public class ReRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re_register);
-        pickAddres = findViewById(R.id.imgMaps);
+        ImageView pickAddres = findViewById(R.id.imgMaps);
         edtNameShop = findViewById(R.id.edtAgentName);
-        btnSimpan = findViewById(R.id.btnSimpan);
+        Button btnSimpan = findViewById(R.id.btnSimpan);
         registerViewModel = ViewModelProviders.of(this).get(RegisterViewModel.class);
-        pickAddres.setOnClickListener(view -> {
-            SwitchActivity.mainSwitch(ReRegisterActivity.this, MapsActivity.class);
-        });
+        pickAddres.setOnClickListener(view -> SwitchActivity.mainSwitch(ReRegisterActivity.this, MapsActivity.class,true,"pick"));
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         systemDataLocal = new SystemDataLocal(this);

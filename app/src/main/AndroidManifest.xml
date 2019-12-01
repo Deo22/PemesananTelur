@@ -14,12 +14,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.home.fragment.transactionfragment.TransactionDetailActivity"></activity>
-        <activity android:name=".ui.forget.NewPasswordActivity" />
-        <activity android:name=".ui.regis.ReRegisterActivity" />
-        <activity android:name=".ui.forget.InputOTPActivity" />
-        <activity android:name=".ui.forget.ForgetActivity" />
-        <activity android:name=".ui.regis.RegisterActivity" />
+        <activity
+            android:name=".ui.home.fragment.transactionfragment.TransactionDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.forget.NewPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.regis.ReRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.forget.InputOTPActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.forget.ForgetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.regis.RegisterActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -27,11 +39,12 @@
 
         <activity
             android:name=".ui.maps.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".ui.transaction.CartActivity" />
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".ui.order.OrderActivity"
             android:screenOrientation="portrait" />

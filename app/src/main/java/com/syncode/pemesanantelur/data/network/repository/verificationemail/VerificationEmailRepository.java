@@ -8,6 +8,8 @@ import com.syncode.pemesanantelur.data.model.MessageOnly;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.data.network.api.ApiInterface;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -22,7 +22,6 @@ import com.syncode.pemesanantelur.data.model.product.ProductEntity;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.ui.order.viewmodel.OrderViewModel;
 import com.syncode.pemesanantelur.utils.DialogClass;
-import com.syncode.pemesanantelur.utils.Formula;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.SimpleDateFormat;
@@ -41,7 +40,7 @@ public class OrderActivity extends AppCompatActivity implements Observer<Message
     private AlertDialog alertDialog;
     private OrderViewModel orderViewModel;
 
-    private int countBuy = 1;
+    private int countBuy = 40;
     private String idProduct;
 
     private AVLoadingIndicatorView progressLoadTotal;
@@ -74,8 +73,8 @@ public class OrderActivity extends AppCompatActivity implements Observer<Message
             txtPrice.setText("Rp." + String.format("%,d", product.getHarga()) + "/Peti");
             Glide.with(this).load(ApiClient.BASE_URL_IMAGE + product.getImage()).into(imgProduct);
             txtCount.setText(String.valueOf(countBuy));
-            txtPriceAll.setText("Rp." + String.format("%,d", product.getHarga()));
-            txtCountPrice.setText("Rp." + String.format("%,d", product.getHarga()));
+            txtPriceAll.setText("Rp." + String.format("%,d", product.getHarga()*countBuy));
+            txtCountPrice.setText("Rp." + String.format("%,d", product.getHarga()*countBuy));
             orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
             btnMinus.setOnClickListener(this);
             btnPlus.setOnClickListener(this);
@@ -87,14 +86,18 @@ public class OrderActivity extends AppCompatActivity implements Observer<Message
             Date objDate = new Date();
             String dateOrd = formatter.format(objDate);
             btnBuy.setOnClickListener(view -> {
-                Calendar calendar = Calendar.getInstance();
-                int m = calendar.get(Calendar.MINUTE);
-                int s = calendar.get(Calendar.SECOND);
-                String idOrder = "ORD-" + ((new Random().nextInt(9) + m) + "" + s);
-                @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.loading_alert, null, false);
-                alertDialog = DialogClass.dialog(this, v).create();
-                alertDialog.show();
-                orderViewModel.getOrderLiveData(idOrder, username, idAddress, idAgent, idProduct, countBuy, dateOrd).observe(this, this);
+                if (countBuy >= 40) {
+                    Calendar calendar = Calendar.getInstance();
+                    int m = calendar.get(Calendar.MINUTE);
+                    int s = calendar.get(Calendar.SECOND);
+                    String idOrder = "ORD-" + ((new Random().nextInt(9) + m) + "" + s);
+                    @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.loading_alert, null, false);
+                    alertDialog = DialogClass.dialog(this, v).create();
+                    alertDialog.show();
+                    orderViewModel.getOrderLiveData(idOrder, username, idAddress, idAgent, idProduct, countBuy, dateOrd).observe(this, this);
+                }else{
+                    Toast.makeText(this,"Jumlah Pesanan Minimal 40 Peti",Toast.LENGTH_LONG).show();
+                }
             });
         }
         if (getSupportActionBar() != null) {

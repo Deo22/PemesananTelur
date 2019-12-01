@@ -52,7 +52,6 @@ public class OrderRepository {
             public void onResponse(@NonNull Call<ResponseChangeCount> call, @NonNull Response<ResponseChangeCount> response) {
                 if (response.body() != null) {
                     responseChangeCountMutableLiveData.postValue(response.body());
-
                 }
             }
 

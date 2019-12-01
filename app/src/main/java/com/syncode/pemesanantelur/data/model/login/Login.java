@@ -19,7 +19,7 @@ public class Login {
     private String idAddr;
     @SerializedName("street")
     private String street;
-    @SerializedName("coordinate")
+    @SerializedName("kordinat")
     private String coordinate;
 
     @SerializedName("shop")

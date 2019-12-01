@@ -15,7 +15,7 @@ import retrofit2.Response;
 
 public class RegisterRepository {
 
-    private MutableLiveData<ResponRegister> responRegisterMutableLiveData = new MutableLiveData<>();
+
     private ApiInterface apiInterface;
 
     public RegisterRepository() {
@@ -23,6 +23,7 @@ public class RegisterRepository {
     }
 
     public MutableLiveData<ResponRegister> getResponRegister(String username, String email, String password, String fname, String lname, String phone) {
+         MutableLiveData<ResponRegister> responRegisterMutableLiveData = new MutableLiveData<>();
         Call<ResponRegister> requestOrder = apiInterface.registerUser(username, email, password, fname, lname, phone);
         requestOrder.enqueue(new Callback<ResponRegister>() {
             @Override
@@ -34,7 +35,7 @@ public class RegisterRepository {
 
             @Override
             public void onFailure(@NonNull Call<ResponRegister> call, @NonNull Throwable t) {
-
+                responRegisterMutableLiveData.postValue(null);
             }
 
         });
@@ -43,21 +44,22 @@ public class RegisterRepository {
     }
 
     public MutableLiveData<ResponRegister> getreResponRegister(String username, String street, String idAgent, String nameShop, String coordinate) {
+         MutableLiveData<ResponRegister> responReRegisterMutableLiveData = new MutableLiveData<>();
         Call<ResponRegister> responRegisterCall = apiInterface.reRegisterUser(username, street, idAgent, nameShop, coordinate);
         responRegisterCall.enqueue(new Callback<ResponRegister>() {
             @Override
             public void onResponse(@NonNull Call<ResponRegister> call, @NonNull Response<ResponRegister> response) {
                 if (response.body() != null)
-                    responRegisterMutableLiveData.postValue(response.body());
+                    responReRegisterMutableLiveData.postValue(response.body());
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponRegister> call, @NonNull Throwable t) {
-
+                responReRegisterMutableLiveData.postValue(null);
             }
         });
 
-        return responRegisterMutableLiveData;
+        return responReRegisterMutableLiveData;
     }
 
 

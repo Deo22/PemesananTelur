@@ -1,6 +1,5 @@
 package com.syncode.pemesanantelur.data.network.repository.changeaccount;
 
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -12,32 +11,41 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChangePasswordRepository {
+public class ChangeProfileRepository {
 
 
     private ApiInterface apiInterface;
 
-    public ChangePasswordRepository() {
+    public ChangeProfileRepository() {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
 
-    public MutableLiveData<MessageOnly> changePassword(String username, String oldPassword, String newPassword) {
-        MutableLiveData<MessageOnly> changePass = new MutableLiveData<>();
-        Call<MessageOnly> requestChangePassword = apiInterface.changePassword(username, oldPassword, newPassword);
+    public MutableLiveData<MessageOnly> changeProfile(String username,
+                                                      String lName,
+                                                      String fName,
+                                                      String nameShop,
+                                                      String email,
+                                                      String address,
+                                                      String phone,String coordinate) {
+        MutableLiveData<MessageOnly> changeProfile = new MutableLiveData<>();
+        Call<MessageOnly> requestChangePassword = apiInterface.changeProfile(username, lName, fName, nameShop, email, address, phone,coordinate);
         requestChangePassword.enqueue(new Callback<MessageOnly>() {
             @Override
             public void onResponse(@NonNull Call<MessageOnly> call, @NonNull Response<MessageOnly> response) {
                 if (response.body() != null)
-                    changePass.postValue(response.body());
+                    changeProfile.postValue(response.body());
+
             }
 
             @Override
             public void onFailure(@NonNull Call<MessageOnly> call, @NonNull Throwable t) {
+                changeProfile.postValue(null);
 
             }
         });
 
-        return changePass;
+        return changeProfile;
     }
+
 }

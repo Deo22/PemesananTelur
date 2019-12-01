@@ -75,18 +75,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onChanged(ResponseLogin login) {
-        if (login.getuserData() != null) {
+        if (login != null && login.getuserData() != null) {
             alertDialog.dismiss();
-            System.out.println(login.getuserData().getIsVerified());
             systemDataLocal = new SystemDataLocal(this, login.getuserData());
             systemDataLocal.setSessionLogin();
             alertDialog.dismiss();
             SwitchActivity.mainSwitch(this, HomeActivity.class);
             finish();
-        } else {
+        } else if (login != null && login.getMessage() != null) {
             alertDialog.dismiss();
             Toast.makeText(this, login.getMessage(), Toast.LENGTH_LONG).show();
         }
+
     }
 
     @Override
@@ -107,6 +107,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = edtPassword.getText().toString().trim();
         homeViewModel.setLogin(username, password);
         homeViewModel.getUserEntityLiveData().observe(this, this);
-
     }
 }

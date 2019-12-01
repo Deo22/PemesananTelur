@@ -18,6 +18,12 @@ public class SwitchActivity {
         from.startActivity(intent);
     }
 
+    public static void mainSwitch(Context from, Class to, boolean value, String key) {
+        Intent intent = new Intent(from, to);
+        intent.putExtra(key, value);
+        from.startActivity(intent);
+    }
+
     public static void mainSwitch(Context from, Class to, Parcelable parcel, String key) {
         Intent intent = new Intent(from, to);
         intent.putExtra(key, parcel);

@@ -63,4 +63,20 @@
     <string name="nomor_telepon">Nomor Telepon</string>
     <string name="tanggal_order">Tanggal Order</string>
     <string name="jumlah_beli">Jumlah Beli</string>
+    <string name="latar_belakang">Indonesia merupakan negara dengan penduduk terpadat ke-3 didunia setelah China dan India, dan seiring dengan meningkatnya taraf hidup masyarakat maka kebutuhan protein hewani terutama dari telur merupakan komoditas alternatif untuk mensuplai kebutuhan protein hewani masyarakat yg relatif murah.
+
+Konsumsi per kapita produk telur ayam di Indonesia rata-rata hanya 87 butir/thn, jauh dibawah Thailand yang mencapai 145 butir/thn, China 304 butir/thn dan Malaysia yang sudah mencapai 311 butir / tahun.
+
+Berdasarkan realitas tersebut diatas PT Moeladi Peternakan Magelang bertekad mengembangkan usaha peternakan ayam Petelur dengan pertimbangan aspek teknis, aspek ekonomi dan aspek sosial yang masih memiliki prospek yang bagus untuk jangka pendek, menengah maupun jangka panjang.</string>
+    <string name="visi_dan_misi">Visi Dan Misi</string>
+    <string name="latartxt">Latar Belakang</string>
+
+    <string-array name="visiandmisi">
+        <item>Menjadi perusahaan perunggasan petelur yang tangguh, yang sesuai dengan 5 prinsip syariah Islam ( halal / non riba ), ramah lingkungan, berperan nyata dalam pemenuhan kebutuhan protein hewani asal unggas dan dalam penyediaan lapangan kerja bagi masyaraka</item>
+        <item>Menyelenggarakan kegiatan di semua aspek dengan managemen yang sesuai dengan 5 prinsip syariah Islam sehingga akan tercapai sebuah usaha yang halal/non riba dan berkah, sesuai dengan Standar Operasional Prosedur sehingga mencapai nilai efisiensi yang optimal.</item>
+        <item>Mewujudkan pengelolaan farm yang ramah lingkungan dengan memperhatikan pengelolaan limbah yang tidak menimbulkan polusi bagi lingkungan.</item>
+        <item>Mampu berkompetisi dengan perusahaan perunggasan sejenis dengan menerapkan managemen “zero defect” secara bertahap dan berkelanjutan.</item>
+        <item>Menyerap tenaga kerja yang sebagian besar berasal dari lingkungan sekitar dan tenaga yang berkompeten di bidangnya.</item>
+        <item>Menjaga hubungan baik dengan semua mitra kerja ( pelanggan, suplier, perbankan, penyewa, dll ) dan juga dengan institusi pendidikan.</item>
+    </string-array>
 </resources>

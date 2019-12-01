@@ -89,4 +89,16 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("transaction")
     Call<OrderEntity> getOrder(@Field("username") String username);
+
+    @FormUrlEncoded
+    @POST("users/changeprofile")
+    Call<MessageOnly> changeProfile(@Field("username")String username,
+                                    @Field("lname")String lName,
+                                    @Field("fname")String fName,
+                                    @Field("nameShop") String nameShop,
+                                    @Field("email") String email,
+                                    @Field("address") String address,
+                                    @Field("phone") String phone,
+                                    @Field("coordinate") String coordinate
+    );
 }

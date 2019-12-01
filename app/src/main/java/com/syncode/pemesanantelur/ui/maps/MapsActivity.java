@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
@@ -43,10 +44,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private LocationManager lm;
 
+    private String allAddress;
     private static final int CODE_PERMISSION_GPS = 1;
     private Marker courierMarker;
     private Order order;
+    private boolean pick;
     private MapsViewModel mapsViewModel;
+    private SystemDataLocal systemDataLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         Intent intent = getIntent();
         order = intent.getParcelableExtra("order");
+        pick = intent.getBooleanExtra("pick", false);
         mapsViewModel = ViewModelProviders.of(this).get(MapsViewModel.class);
+        systemDataLocal = new SystemDataLocal(this);
     }
 
     @Override
@@ -88,40 +94,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         }
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        mMap.setOnMapClickListener(latLng -> {
-            List<Address> addresses;
-            mMap.clear();
-            mMap.addMarker(new MarkerOptions().position(latLng));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            try {
-                addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String zip = addresses.get(0).getPostalCode();
-                String country = addresses.get(0).getCountryName();
-                String allAddress = address + " " + city + " " + state + " " + zip;
-                String latLong = latLng.latitude + "," + latLng.longitude;
-                SystemDataLocal systemDataLocal = new SystemDataLocal(this);
-                systemDataLocal.setCoordinate(allAddress, latLong);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            alertDialogYesOrNo();
-        });
-
+        if (systemDataLocal.getLoginData() != null && order !=null) {
+            String[] coordinate = systemDataLocal.getLoginData().getCoordinate().split(",");
+            double lat = Double.parseDouble(coordinate[0]);
+            double lot = Double.parseDouble(coordinate[1]);
+            LatLng myPos = new LatLng(lat, lot);
+            mMap.addMarker(new MarkerOptions().position(myPos)).setTitle("My Location");
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPos, 15.0f));
+        }
+        if (pick) {
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            mMap.setOnMapClickListener(latLng -> {
+                List<Address> addresses;
+                mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(latLng));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                try {
+                    addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                    String address = addresses.get(0).getAddressLine(0);
+                    String city = addresses.get(0).getLocality();
+                    allAddress = address + " " + city + " ";
+                    String latLong = latLng.latitude + "," + latLng.longitude;
+                    SystemDataLocal systemDataLocal = new SystemDataLocal(this);
+                    systemDataLocal.setCoordinate(allAddress, latLong);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                alertDialogYesOrNo(allAddress);
+            });
+        }
         mMap.setMyLocationEnabled(true);
     }
 
 
-    private void alertDialogYesOrNo() {
+    private void alertDialogYesOrNo(String allAddress) {
         @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.alert_location_yes, null, false);
+        EditText edtAddress = v.findViewById(R.id.edtAddress);
         AlertDialog.Builder builder = DialogClass.dialog(this, v);
-        builder.setPositiveButton("Simpan", (dialogInterface, i) -> onBackPressed()).setNegativeButton("Tidak", (dialogInterface, i) -> {
+        builder.setTitle("Simpan Alamat ?");
+        builder.setPositiveButton("Simpan", (dialogInterface, i) ->
+                onBackPressed()
+        ).setNegativeButton("Tidak", (dialogInterface, i) -> {
             dialogInterface.dismiss();
         });
-
+        edtAddress.setText(allAddress);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

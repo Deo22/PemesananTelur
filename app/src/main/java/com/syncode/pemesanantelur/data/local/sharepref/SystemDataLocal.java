@@ -54,7 +54,7 @@ public class SystemDataLocal {
         editor.putString("address", address);
         editor.putString("email", email);
         editor.putString("shop", shop);
-        editor.putString("idAddres", address);
+        editor.putString("idAddres", idAddr);
         editor.putString("phone", phone);
         editor.putBoolean("login", true);
         editor.apply();
@@ -95,10 +95,10 @@ public class SystemDataLocal {
         sharedPreferences.edit().clear().apply();
     }
 
-    public void setCoordinate(String alamat, String coordinate) {
+    public void setCoordinate(String address, String coordinate) {
         sharedPreferences = context.getSharedPreferences(KEY_ADDR, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("addr", alamat);
+        editor.putString("addr", address);
         editor.putString("coordinate", coordinate);
         editor.apply();
     }

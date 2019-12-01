@@ -66,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         String fname = edtFname.getText().toString().trim();
         String phone = edtPhone.getText().toString().trim();
         registerViewModel.getRegisterRespon(username, email, password, fname, lname, phone).observe(this, responRegister -> {
+
             if (responRegister.getUserData() != null) {
                 alertDialog.dismiss();
                 Toast.makeText(RegisterActivity.this, responRegister.getMessage(), Toast.LENGTH_LONG).show();

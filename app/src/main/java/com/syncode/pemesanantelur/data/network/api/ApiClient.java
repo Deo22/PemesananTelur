@@ -7,10 +7,10 @@ public class ApiClient {
 
     private static Retrofit retrofit = null;
 
-    public final static String BASE_URL_IMAGE ="http://192.168.100.11/telor/assets/dashboard/image/";
+    public final static String BASE_URL_IMAGE ="http://192.168.43.31/telor/assets/dashboard/image/";
     public static Retrofit getClient() {
         if (retrofit == null) {
-            retrofit = new Retrofit.Builder().baseUrl("http://192.168.100.11/telor/api/")
+            retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.31/telor/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
