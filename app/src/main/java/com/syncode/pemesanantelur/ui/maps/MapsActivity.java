@@ -11,9 +11,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -78,6 +80,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == CODE_PERMISSION_GPS){
+            if(grantResults.length > 0&&grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -85,12 +98,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, CODE_PERMISSION_GPS);
             } else {
+                mMap.setMyLocationEnabled(true);
                 boolean isGpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
                 if (isGpsEnabled) {
                     Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     if (location != null) {
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15.0f));
                     }
+                }else{
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
                 }
             }
         }
@@ -123,7 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 alertDialogYesOrNo(allAddress);
             });
         }
-        mMap.setMyLocationEnabled(true);
+
     }
 
 
@@ -134,9 +151,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         builder.setTitle("Simpan Alamat ?");
         builder.setPositiveButton("Simpan", (dialogInterface, i) ->
                 onBackPressed()
-        ).setNegativeButton("Tidak", (dialogInterface, i) -> {
-            dialogInterface.dismiss();
-        });
+        ).setNegativeButton("Tidak", (dialogInterface, i) -> dialogInterface.dismiss());
         edtAddress.setText(allAddress);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
