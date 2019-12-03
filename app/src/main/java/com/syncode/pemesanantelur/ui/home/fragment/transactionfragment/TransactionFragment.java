@@ -75,25 +75,31 @@ public class TransactionFragment extends Fragment {
         tmpAllTransaction.clear();
         transactionViewModel.getDataOrder(user.getUsername()).observe(this,orderEntity -> {
             tmpAllTransaction.clear();
-            if (orderEntity.getDataTransaction() != null) {
-                tmpAllTransaction.addAll(orderEntity.getDataTransaction());
-            }
-            if (orderEntity.getRowCount() > 0) {
-                tmpAllTransaction.addAll(orderEntity.getDataOrder());
-            }
-            if (tmpAllTransaction.size() > 0) {
-                progressBar.setVisibility(View.GONE);
-                errorLayout.setVisibility(View.GONE);
-                swipeRefreshLayout.setVisibility(View.VISIBLE);
-                adapterTransaction = new AdapterTransaction(tmpAllTransaction);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapterTransaction);
-            } else {
+            if(orderEntity !=null) {
+                if (orderEntity.getDataTransaction() != null) {
+                    tmpAllTransaction.addAll(orderEntity.getDataTransaction());
+                }
+                if (orderEntity.getRowCount() > 0) {
+                    tmpAllTransaction.addAll(orderEntity.getDataOrder());
+                }
+                if (tmpAllTransaction.size() > 0) {
+                    progressBar.setVisibility(View.GONE);
+                    errorLayout.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+                    adapterTransaction = new AdapterTransaction(tmpAllTransaction);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(adapterTransaction);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    errorLayout.setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setVisibility(View.GONE);
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }else{
                 progressBar.setVisibility(View.GONE);
                 errorLayout.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setVisibility(View.GONE);
             }
-            swipeRefreshLayout.setRefreshing(false);
         });
     }
 }

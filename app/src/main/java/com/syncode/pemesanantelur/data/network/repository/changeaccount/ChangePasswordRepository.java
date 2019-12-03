@@ -28,13 +28,17 @@ public class ChangePasswordRepository {
         requestChangePassword.enqueue(new Callback<MessageOnly>() {
             @Override
             public void onResponse(@NonNull Call<MessageOnly> call, @NonNull Response<MessageOnly> response) {
-                if (response.body() != null)
+                if (response.body() != null) {
                     changePass.postValue(response.body());
+                } else {
+                    changePass.postValue(null);
+                }
+
             }
 
             @Override
             public void onFailure(@NonNull Call<MessageOnly> call, @NonNull Throwable t) {
-
+                changePass.postValue(null);
             }
         });
 

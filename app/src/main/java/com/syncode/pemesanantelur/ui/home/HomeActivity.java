@@ -2,8 +2,6 @@ package com.syncode.pemesanantelur.ui.home;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -151,9 +149,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private AlertDialog alertDialogEmailVerify() {
         @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.verification_email_dialog, null, false);
         AlertDialog.Builder builderVerify = DialogClass.dialog(this, v);
-        builderVerify.setNegativeButton("Nanti", (dialogInterface, i) -> {
-            dialogInterface.dismiss();
-        }).setPositiveButton("Verifikasi", (dialogInterface, i) -> {
+        builderVerify.setNegativeButton("Nanti", (dialogInterface, i) -> dialogInterface.dismiss()).setPositiveButton("Verifikasi", (dialogInterface, i) -> {
             loadingDialog();
             verificationEmailRepository.getTokenVerification(systemDataLocal.getLoginData().getEmail()).observe(this, this);
         });
@@ -180,8 +176,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onChanged(MessageOnly messageOnly) {
-        alertDialog.dismiss();
-        inputTokenDialog();
+        if(messageOnly.isStatus()) {
+            inputTokenDialog();
+            alertDialog.dismiss();
+        }
         Toast.makeText(HomeActivity.this, messageOnly.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

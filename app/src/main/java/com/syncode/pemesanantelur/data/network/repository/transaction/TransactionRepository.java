@@ -1,5 +1,6 @@
 package com.syncode.pemesanantelur.data.network.repository.transaction;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.syncode.pemesanantelur.data.model.order.OrderEntity;
@@ -27,17 +28,17 @@ public class TransactionRepository {
         Call<OrderEntity> requestDataOrder = apiInterface.getOrder(username);
         requestDataOrder.enqueue(new Callback<OrderEntity>() {
             @Override
-            public void onResponse(Call<OrderEntity> call, Response<OrderEntity> response) {
+            public void onResponse(@NonNull Call<OrderEntity> call, @NonNull Response<OrderEntity> response) {
                 if (response.body() != null) {
                     orderEntityMutableLiveData.postValue(response.body());
                 } else {
-                    System.out.println("error");
+                    orderEntityMutableLiveData.postValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<OrderEntity> call, Throwable t) {
-                System.out.println(t.getMessage());
+            public void onFailure(@NonNull Call<OrderEntity> call, @NonNull Throwable t) {
+                orderEntityMutableLiveData.postValue(null);
             }
         });
 

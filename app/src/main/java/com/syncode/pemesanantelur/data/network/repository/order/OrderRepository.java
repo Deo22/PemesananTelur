@@ -8,8 +8,6 @@ import com.syncode.pemesanantelur.data.model.ResponseChangeCount;
 import com.syncode.pemesanantelur.data.network.api.ApiClient;
 import com.syncode.pemesanantelur.data.network.api.ApiInterface;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,7 +15,7 @@ import retrofit2.Response;
 public class OrderRepository {
 
 
-    private MutableLiveData<MessageOnly> orderData = new MutableLiveData<>();
+
     private ApiInterface apiInterface;
 
 
@@ -26,22 +24,25 @@ public class OrderRepository {
     }
 
     public MutableLiveData<MessageOnly> sendOrderData(String idOrder, String username, String idAddress, String idAgent, String idProduct, int jumlahOrder, String date) {
+         MutableLiveData<MessageOnly> order = new MutableLiveData<>();
         Call<MessageOnly> requestOrder = apiInterface.order(idOrder, username, idAddress, idAgent, idProduct, jumlahOrder, date);
         requestOrder.enqueue(new Callback<MessageOnly>() {
             @Override
             public void onResponse(@NonNull Call<MessageOnly> call, @NonNull Response<MessageOnly> response) {
                 if (response.body() != null) {
-                    orderData.postValue(response.body());
+                    order.postValue(response.body());
+                }else{
+                    order.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MessageOnly> call, @NonNull Throwable t) {
-                orderData.postValue(null);
+                order.postValue(null);
             }
         });
 
-        return orderData;
+        return order;
     }
 
     public MutableLiveData<ResponseChangeCount> getTotalWithCountBuy(String id_product, int count) {

@@ -48,6 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String allAddress;
     private static final int CODE_PERMISSION_GPS = 1;
+    boolean isGpsEnabled;
     private Marker courierMarker;
     private Order order;
     private boolean pick;
@@ -64,6 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mapFragment.getMapAsync(this);
         }
         lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+
         Intent intent = getIntent();
         order = intent.getParcelableExtra("order");
         pick = intent.getBooleanExtra("pick", false);
@@ -71,6 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         systemDataLocal = new SystemDataLocal(this);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onResume() {
         super.onResume();
@@ -78,14 +81,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String idTransaction = order.getIdTransaksi();
             mapsViewModel.getTracking(idTransaction).observe(this, this);
         }
+        if (lm != null) {
+            isGpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            if (!isGpsEnabled) {
+                setGpsEnabled();
+            } else {
+                if (mMap != null) {
+                    mMap.setMyLocationEnabled(true);
+                }
+            }
+        }
+
     }
 
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == CODE_PERMISSION_GPS){
-            if(grantResults.length > 0&&grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == CODE_PERMISSION_GPS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mMap.setMyLocationEnabled(true);
             }
         }
@@ -98,20 +112,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, CODE_PERMISSION_GPS);
             } else {
-                mMap.setMyLocationEnabled(true);
-                boolean isGpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
                 if (isGpsEnabled) {
                     Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    mMap.setMyLocationEnabled(true);
                     if (location != null) {
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15.0f));
                     }
-                }else{
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(intent);
                 }
             }
         }
-        if (systemDataLocal.getLoginData() != null && order !=null) {
+        if (systemDataLocal.getLoginData() != null && order != null) {
             String[] coordinate = systemDataLocal.getLoginData().getCoordinate().split(",");
             double lat = Double.parseDouble(coordinate[0]);
             double lot = Double.parseDouble(coordinate[1]);
@@ -168,9 +178,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     MarkerAnimation.animateMarkerToGB(courierMarker, latLng, new LatLngInterpolator.Spherical());
                 }
             }
-
         } else {
             System.out.println("Selesai Order");
         }
+    }
+
+    private void setGpsEnabled() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(intent);
     }
 }
