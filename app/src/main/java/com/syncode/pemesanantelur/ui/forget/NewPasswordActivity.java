@@ -39,6 +39,7 @@ public class NewPasswordActivity extends AppCompatActivity {
                 forgetViewModel.getResetPassword(email, password).observe(this, messageOnly -> {
                     if (messageOnly.isStatus()) {
                         SwitchActivity.mainSwitch(NewPasswordActivity.this, LoginActivity.class);
+                        finish();
                     } else {
                         Toast.makeText(NewPasswordActivity.this, "Gagal Ubah Password", Toast.LENGTH_LONG).show();
                     }

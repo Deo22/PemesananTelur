@@ -13,7 +13,6 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btnUbah"
@@ -31,6 +30,7 @@
 
 
                 <EditText
+                    android:inputType="text"
                     android:id="@+id/edt_shop"
                     style="@style/editText"
                     android:layout_width="match_parent"
@@ -48,6 +48,7 @@
                     android:background="@color/white" />
 
                 <EditText
+                    android:inputType="text"
                     android:id="@+id/edt_username"
                     style="@style/editText"
                     android:layout_width="match_parent"
@@ -67,6 +68,7 @@
                 <EditText
                     android:id="@+id/edtFirstName"
                     style="@style/editText"
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_person"
@@ -85,6 +87,7 @@
                 <EditText
                     android:id="@+id/edtLastName"
                     style="@style/editText"
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_person"

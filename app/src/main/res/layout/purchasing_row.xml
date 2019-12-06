@@ -12,6 +12,7 @@
 
 
     <ImageView
+        android:contentDescription="@string/imagecontent"
         android:id="@+id/imgProduct"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -44,7 +45,6 @@
         android:layout_marginStart="@dimen/margin_horizontal">
 
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/jumlah_beli"
@@ -61,7 +61,6 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
@@ -71,7 +70,6 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout3">
 
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/total_harga"

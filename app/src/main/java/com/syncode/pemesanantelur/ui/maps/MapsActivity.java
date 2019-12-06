@@ -65,7 +65,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mapFragment.getMapAsync(this);
         }
         lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-
         Intent intent = getIntent();
         order = intent.getParcelableExtra("order");
         pick = intent.getBooleanExtra("pick", false);
@@ -84,14 +83,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (lm != null) {
             isGpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
             if (!isGpsEnabled) {
-                setGpsEnabled();
+                alertDialogEnableLocation();
             } else {
                 if (mMap != null) {
                     mMap.setMyLocationEnabled(true);
                 }
             }
         }
-
     }
 
     @SuppressLint("MissingPermission")
@@ -167,16 +165,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alertDialog.show();
     }
 
+    private void alertDialogEnableLocation() {
+        AlertDialog.Builder builder = DialogClass.dialog(this, null);
+        builder.setTitle("Required Permission");
+        builder.setMessage("Aktifkan Location Service");
+        builder.setNegativeButton("Ok", (dialogInterface, i) -> setGpsEnabled()).setPositiveButton("Batal", (dialogInterface, i) -> {
+            System.exit(0);
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     @Override
     public void onChanged(TrackingModel trackingModel) {
         if (trackingModel != null) {
             LatLng latLng = new LatLng(trackingModel.getLat(), trackingModel.getLont());
-            if (mMap != null) {
-                if (courierMarker == null) {
-                    courierMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.car2)).position(latLng));
-                } else {
-                    MarkerAnimation.animateMarkerToGB(courierMarker, latLng, new LatLngInterpolator.Spherical());
-                }
+            if (mMap != null && courierMarker == null) {
+                courierMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.car2)).position(latLng));
+            } else {
+                MarkerAnimation.animateMarkerToGB(courierMarker, latLng, new LatLngInterpolator.Spherical());
             }
         } else {
             System.out.println("Selesai Order");

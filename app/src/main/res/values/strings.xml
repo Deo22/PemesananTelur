@@ -8,15 +8,9 @@
     <string name="forget_password">Forget Password?</string>
     <string name="imagecontent">imageContent</string>
     <string name="telor_ayam_negri">Telor Ayam Negri</string>
-    <string name="lorem">The placeholder text, beginning with the line “Lorem ipsum dolor sit amet, consectetur adipiscing elit”, looks like Latin because in its youth, centuries ago, it was Latin. Richard McClintock, a Latin scholar from Hampden-Sydney College, is credited with discovering the source behind the ubiquitous filler text.</string>
-    <string name="buy">Beli Produk</string>
     <string name="minus">-</string>
-    <string name="_0">0</string>
     <string name="plus">+</string>
-    <string name="subTotal">SubTotal</string>
-    <string name="bayar">Bayar</string>
     <string name="rp29_800">Rp29.800/Peti</string>
-    <string name="belum_ada_daftar_belanja">Belum ada Daftar Belanja</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_maps">Map</string>
@@ -45,15 +39,12 @@
     <string name="message_email">Email Anda Belum Terverifikasi</string>
     <string name="message_email2">Ingin Verifikasi Email ?</string>
     <string name="pt">PT Moeladi Peternakan</string>
-    <string name="ongkos_kirim">Ongkos Kirim</string>
     <string name="total_harga">Total Harga</string>
     <string name="rincian_harga">Rincian Harga</string>
     <string name="daftar_belanja">Daftar Belanja</string>
     <string name="total_pembayaran">Total Pembayaran</string>
     <string name="mulai_pesan">Mulai Pesan</string>
     <string name="alamat_pengiriman">Alamat Pengiriman</string>
-    <string name="kualitas">Kualitas</string>
-    <string name="apakah_anda_yakin">Apakah Anda Yakin ?</string>
     <string name="tidak_ada_transaksi">Tidak Ada Transaksi</string>
     <string name="nama_produk">Nama Produk</string>
     <string name="quality">Quality</string>
